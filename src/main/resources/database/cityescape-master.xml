@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+    <!-- TABLES, COLUMNS, INDEXES, CONSTRAINTS etc.-->
+    <include file="cityescapedb_ddl.xml" relativeToChangelogFile="true"/>
+
+    <!-- INSERTS, DELETES, UPDATES etc.-->
+    <include file="cityescapedb_data.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
