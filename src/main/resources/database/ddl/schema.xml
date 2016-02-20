@@ -6,7 +6,26 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
 
-    <!-- CREATE TRIP_TAG TABLE -->
+    <changeSet author="slava" id="1">
+        <comment>Create POE_TAG table</comment>
+        <createTable tableName="TRIP_TAG">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="TAG" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONSUMED" type="BOOLEAN" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="TRIP_TAG"/>
+        </rollback>
+    </changeSet>
+
     <changeSet author="slava" id="1">
         <comment>Create TRIP_TAG table</comment>
         <createTable tableName="TRIP_TAG">
@@ -26,14 +45,6 @@
             <dropTable tableName="TRIP_TAG"/>
         </rollback>
     </changeSet>
-
-    <!--<changeSet author="slava" id="2">-->
-        <!--<comment>Create Sequence TRIP_TAG_ID_SEQ</comment>-->
-        <!--<createSequence sequenceName="TRIP_TAG_ID_SEQ"/>-->
-        <!--<modifySql dbms="mysql">-->
-            <!--<append value=" MINVALUE 1 MAXVALUE 999999999999999999999999 INCREMENT BY 1 NOCYCLE cache 1000"/>-->
-        <!--</modifySql>-->
-    <!--</changeSet>-->
 
 
 </databaseChangeLog>
