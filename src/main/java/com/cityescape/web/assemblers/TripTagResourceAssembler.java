@@ -1,7 +1,7 @@
 package com.cityescape.web.assemblers;
 
 import com.cityescape.domain.TripTag;
-import com.cityescape.resource.TripTagResource;
+import com.cityescape.web.resource.TripTagResource;
 import com.cityescape.web.controller.TripTagController;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.IdentifiableResourceAssemblerSupport;
@@ -23,6 +23,7 @@ public class TripTagResourceAssembler extends IdentifiableResourceAssemblerSuppo
         TripTagResource resource = new TripTagResource();
         resource.setTagId(tripTag.getId());
         resource.setTag(tripTag.getTag());
+        resource.setDescription(tripTag.getDescription());
 
         resource.add((ControllerLinkBuilder.linkTo((ControllerLinkBuilder.methodOn(TripTagController.class)
                 .getTripTagByTag(tripTag.getTag()))).withSelfRel()));

@@ -15,14 +15,25 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="TAG" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="true"/>
             </column>
         </createTable>
 
         <rollback>
-            <dropTable tableName="TEMPLATE"/>
+            <dropTable tableName="TRIP_TAG"/>
         </rollback>
     </changeSet>
+
+    <!--<changeSet author="slava" id="2">-->
+        <!--<comment>Create Sequence TRIP_TAG_ID_SEQ</comment>-->
+        <!--<createSequence sequenceName="TRIP_TAG_ID_SEQ"/>-->
+        <!--<modifySql dbms="mysql">-->
+            <!--<append value=" MINVALUE 1 MAXVALUE 999999999999999999999999 INCREMENT BY 1 NOCYCLE cache 1000"/>-->
+        <!--</modifySql>-->
+    <!--</changeSet>-->
 
 
 </databaseChangeLog>

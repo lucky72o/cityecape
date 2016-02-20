@@ -1,4 +1,4 @@
-package com.cityescape.resource;
+package com.cityescape.web.resource;
 
 import org.springframework.hateoas.ResourceSupport;
 
@@ -9,6 +9,7 @@ public class TripTagResource extends ResourceSupport {
 
     private Long tagId;
     private String tag;
+    private String description;
 
     public Long getTagId() {
         return tagId;
@@ -26,4 +27,11 @@ public class TripTagResource extends ResourceSupport {
         this.tag = tag;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -2,8 +2,10 @@ package com.cityescape.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -17,14 +19,24 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @SequenceGenerator(name = "betMoneySeq", sequenceName = "BET_MONEY_ID_SEQ")
+//    @SequenceGenerator(name = "tripTagSeq", sequenceName = "TRIP_TAG_ID_SEQ")
     private Long id;
 
     @Column(name = "TAG")
+    @Size(min = 1, max = 255)
     private String tag;
+
+    @Column(name = "DESCRIPTION")
+    @Size(min = 0, max = 255)
+    private String description;
 
     public TripTag(String tag) {
         this.tag = tag;
+    }
+
+    public TripTag(String tag, String description) {
+        this.tag = tag;
+        this.description = description;
     }
 
     public TripTag() {
@@ -38,12 +50,21 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
         return tag;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
-        return "TripTag{" +
-                "id=" + id +
-                ", tag='" + tag + '\'' +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", this.id)
+                .append("tag", this.tag)
+                .append("description", this.description)
+                .toString();
     }
 
     @Override
@@ -55,16 +76,18 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
         TripTag tripTag = (TripTag) o;
 
         return new EqualsBuilder()
-                .append(id, tripTag.id)
-                .append(tag, tripTag.tag)
+                .append(this.id, tripTag.getId())
+                .append(this.tag, tripTag.getTag())
+                .append(this.description, tripTag.getDescription())
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
+        return new HashCodeBuilder()
                 .append(id)
                 .append(tag)
+                .append(description)
                 .toHashCode();
     }
 }

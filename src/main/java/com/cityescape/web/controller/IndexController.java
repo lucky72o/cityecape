@@ -1,6 +1,6 @@
 package com.cityescape.web.controller;
 
-import com.cityescape.resource.VoidResource;
+import com.cityescape.web.resource.VoidResource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

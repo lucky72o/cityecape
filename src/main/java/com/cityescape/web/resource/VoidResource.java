@@ -1,4 +1,4 @@
-package com.cityescape.resource;
+package com.cityescape.web.resource;
 
 import org.springframework.hateoas.ResourceSupport;
 

@@ -1,7 +1,7 @@
 package com.cityescape.web.controller;
 
 import com.cityescape.domain.TripTag;
-import com.cityescape.resource.TripTagResource;
+import com.cityescape.web.resource.TripTagResource;
 import com.cityescape.service.TripTagService;
 import com.cityescape.web.assemblers.TripTagResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.LinkedList;
 
 /**
  * Created by Slava on 15/02/2016.

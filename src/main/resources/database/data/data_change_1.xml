@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="data_change_1.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="slava" id="3">
+
+        <comment>Add predefined tags to TRIP_TAG table</comment>
+
+        <insert tableName="TRIP_TAG">
+            <column name="ID" autoIncrement="true"/>
+            <column name="TAG" value="Food"/>
+            <column name="DESCRIPTION" value="Good place to get food"/>
+        </insert>
+
+        <insert tableName="TRIP_TAG">
+            <column name="ID" autoIncrement="true"/>
+            <column name="TAG" value="Architecture"/>
+            <column name="DESCRIPTION" value="Good place for people who likes architecture "/>
+        </insert>
+
+        <insert tableName="TRIP_TAG">
+            <column name="ID" autoIncrement="true"/>
+            <column name="TAG" value="Shopping"/>
+            <column name="DESCRIPTION" value="Good place for people who likes shopping "/>
+        </insert>
+
+        <insert tableName="TRIP_TAG">
+            <column name="ID" autoIncrement="true"/>
+            <column name="TAG" value="Countryside"/>
+            <column name="DESCRIPTION" value="Good place for people who likes countryside "/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
