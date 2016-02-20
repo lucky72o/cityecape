@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -25,13 +26,11 @@ public class PoeTagServiceImpl implements PoeTagService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PoeTagServiceImpl.class);
 
-    private AtomicLong id = new AtomicLong(0);
-
     @Override
-    public String createTag(String uri, boolean oneTimeOnly) {
+    public String createTag(String uri) {
         Assert.notNull(uri);
 
-        Long nextId = id.incrementAndGet();
+        Long nextId = System.currentTimeMillis() + new Random().nextInt(1000);
         String ref = createEtag(uri, nextId);
         PoeTag tag = new PoeTag(ref);
 
@@ -48,8 +47,8 @@ public class PoeTagServiceImpl implements PoeTagService {
             throw new NoSuchTagException(ref);
         }
 
-        LOGGER.info("Retrieved the Tag: EntityId [{}], Consumed [{}], Reference [{}]", tag.getId(), tag.getConsumed(), tag.getId(), tag.getTag());
-        return null;
+        LOGGER.info("Retrieved the Tag: EntityId [{}], Consumed [{}], Reference [{}]", tag.getId(), tag.getConsumed(), tag.getTag());
+        return tag;
     }
 
     @Override
@@ -59,10 +58,19 @@ public class PoeTagServiceImpl implements PoeTagService {
             throw new NoSuchTagException(ref);
         }
 
-        LOGGER.info("Retrieved the Tag: EntityId [{}], Consumed [{}], Reference [{}]", tag.getId(), tag.getConsumed(), tag.getId(), tag.getTag());
+        LOGGER.info("Retrieved the Tag: EntityId [{}], Consumed [{}], Reference [{}]", tag.getId(), tag.getConsumed(), tag.getTag());
 
         tag.setConsumed(true);
         poeTagRepository.saveAndFlush(tag);
+    }
+
+    @Override
+    public void consumeTag(PoeTag poeTag) throws NoSuchTagException {
+
+        LOGGER.info("Retrieved the Tag: EntityId [{}], Consumed [{}], Reference [{}]", poeTag.getId(), poeTag.getConsumed(), poeTag.getTag());
+
+        poeTag.setConsumed(true);
+        poeTagRepository.saveAndFlush(poeTag);
     }
 
     private String createEtag(final String uri, final Long counter) {

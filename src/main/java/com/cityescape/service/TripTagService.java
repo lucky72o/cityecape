@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service;
  */
 public interface TripTagService {
     TripTag findByTag(String tag);
+
+    TripTag create(TripTag tripTag);
 }

@@ -8,7 +8,7 @@
 
     <changeSet author="slava" id="1">
         <comment>Create POE_TAG table</comment>
-        <createTable tableName="TRIP_TAG">
+        <createTable tableName="POE_TAG">
 
             <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
@@ -22,11 +22,11 @@
         </createTable>
 
         <rollback>
-            <dropTable tableName="TRIP_TAG"/>
+            <dropTable tableName="POE_TAG"/>
         </rollback>
     </changeSet>
 
-    <changeSet author="slava" id="1">
+    <changeSet author="slava" id="2">
         <comment>Create TRIP_TAG table</comment>
         <createTable tableName="TRIP_TAG">
 

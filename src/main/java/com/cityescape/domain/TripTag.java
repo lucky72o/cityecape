@@ -19,7 +19,6 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @SequenceGenerator(name = "tripTagSeq", sequenceName = "TRIP_TAG_ID_SEQ")
     private Long id;
 
     @Column(name = "TAG")

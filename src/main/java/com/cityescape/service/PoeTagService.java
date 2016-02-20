@@ -10,7 +10,9 @@ import java.io.Serializable;
  */
 public interface PoeTagService {
 
-    String createTag(final String uri, final boolean oneTimeOnly);
+    String createTag(final String uri);
     PoeTag getTag(final String ref) throws NoSuchTagException;
     void consumeTag(final String ref) throws NoSuchTagException;
+
+    void consumeTag(PoeTag poeTag) throws NoSuchTagException;
 }

@@ -1,11 +1,14 @@
 package com.cityescape.web.assemblers;
 
 import com.cityescape.domain.TripTag;
+import com.cityescape.web.form.TripTagForm;
 import com.cityescape.web.resource.TripTagResource;
 import com.cityescape.web.controller.TripTagController;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.IdentifiableResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
+
+import static com.cityescape.web.support.NavigationLinkBuilder.linkToCurrentRequest;
 
 /**
  * Created by Slava on 18/02/2016.
@@ -48,5 +51,15 @@ public class TripTagResourceAssembler extends IdentifiableResourceAssemblerSuppo
 //                        .methodOn(TripTagController.class)
 //                        .deleteBonusOfferTag(bonusOfferTagResource.getTagId()))
 //                .withRel(ApplicationProtocol.DELETE_BONUSOFFER_TAG_ACTION_REL));
+    }
+
+    public void addLinksToForm(TripTagForm form, String poeTag) {
+        form.add(linkToCurrentRequest().withSelfRel());
+
+        form.add(ControllerLinkBuilder
+                .linkTo(ControllerLinkBuilder
+                        .methodOn(TripTagController.class)
+                        .createTripTag(poeTag, form))
+                .withRel("create-trip-tag-action"));
     }
 }

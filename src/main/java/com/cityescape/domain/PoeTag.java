@@ -28,7 +28,7 @@ public class PoeTag extends AbstractEntity<Long> implements Serializable {
     @Size(min = 1, max = 255)
     private String tag;
 
-    @Column(name = "consumed")
+    @Column(name = "CONSUMED")
     private Boolean consumed = Boolean.FALSE;
 
     public Long getId() {
