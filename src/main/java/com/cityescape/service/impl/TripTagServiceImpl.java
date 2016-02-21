@@ -5,9 +5,14 @@ import com.cityescape.exception.DuplicateDataException;
 import com.cityescape.exception.EntityToSaveIsNullException;
 import com.cityescape.repository.TripTagRepository;
 import com.cityescape.service.TripTagService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by Slava on 15/02/2016.
@@ -16,12 +21,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TripTagServiceImpl implements TripTagService {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(TripTagServiceImpl.class);
+
     @Autowired
     private TripTagRepository tripTagRepository;
 
     @Override
     public TripTag findByTag(String tag) {
-        return tripTagRepository.findByTag(tag);
+        LOGGER.info("Retrieving a trip tag by tag name {}", tag);
+        TripTag tripTag = tripTagRepository.findByTag(tag);
+
+        if (tripTag == null) {
+            throw new DataRetrievalFailureException("Trip Tag tag name [" + tag + "] is not valid.");
+        }
+
+        return tripTag;
     }
 
     @Override
@@ -37,5 +51,15 @@ public class TripTagServiceImpl implements TripTagService {
         }
 
         return tripTagRepository.save(tripTag);
+    }
+
+    @Override
+    public List<TripTag> findAll() {
+        return tripTagRepository.findAll();
+    }
+
+    @Override
+    public void delete(TripTag tripTag) {
+        tripTagRepository.delete(tripTag);
     }
 }

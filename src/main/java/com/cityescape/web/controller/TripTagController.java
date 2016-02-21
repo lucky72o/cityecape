@@ -7,6 +7,7 @@ import com.cityescape.web.form.TripTagForm;
 import com.cityescape.web.resource.TripTagResource;
 import com.cityescape.service.TripTagService;
 import com.cityescape.web.assemblers.TripTagResourceAssembler;
+import com.cityescape.web.resource.TripTagResourceCollection;
 import com.cityescape.web.support.TripTagTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -14,9 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import sun.security.util.DerValue;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by Slava on 15/02/2016.
@@ -34,6 +35,14 @@ public class TripTagController extends AbstractController {
     @Autowired
     private PoeTagService poeTagService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public HttpEntity<TripTagResourceCollection> getTripTags() {
+        List<TripTag> tripTags = tripTagService.findAll();
+        TripTagResourceCollection resources = tripTagResourceAssembler.toResourceCollection(tripTags);
+
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{tripTag}", method = RequestMethod.GET)
     public HttpEntity<TripTagResource> getTripTagByTag(@PathVariable("tripTag") String tripTagName) {
 
@@ -43,6 +52,15 @@ public class TripTagController extends AbstractController {
         tripTagResourceAssembler.addLinksToResource(resource);
 
         return new ResponseEntity<>(resource, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{tripTag}", method = RequestMethod.DELETE)
+    public HttpEntity<TripTagResource> deleteTripTagByTag(@PathVariable("tripTag") String tripTagName) {
+
+        TripTag tripTag = tripTagService.findByTag(tripTagName);
+        tripTagService.delete(tripTag);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)

@@ -4,9 +4,15 @@ import com.cityescape.domain.TripTag;
 import com.cityescape.web.form.TripTagForm;
 import com.cityescape.web.resource.TripTagResource;
 import com.cityescape.web.controller.TripTagController;
+import com.cityescape.web.resource.TripTagResourceCollection;
+import com.cityescape.web.support.NavigationLinkBuilder;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.IdentifiableResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.cityescape.web.support.NavigationLinkBuilder.linkToCurrentRequest;
 
@@ -40,17 +46,23 @@ public class TripTagResourceAssembler extends IdentifiableResourceAssemblerSuppo
                 .linkTo(TripTagController.class)
                 .withRel("triptags"));
 
-//        resource.add(ControllerLinkBuilder
-//                .linkTo(ControllerLinkBuilder
-//                        .methodOn(TripTagController.class)
-//                        .getUpdateBonusOfferTagForm(bonusOfferTagResource.getTagId()))
-//                .withRel(ApplicationProtocol.UPDATE_BONUSOFFER_TAG_FORM_REL));
-//
-//        resource.add(ControllerLinkBuilder
-//                .linkTo(ControllerLinkBuilder
-//                        .methodOn(TripTagController.class)
-//                        .deleteBonusOfferTag(bonusOfferTagResource.getTagId()))
-//                .withRel(ApplicationProtocol.DELETE_BONUSOFFER_TAG_ACTION_REL));
+        resource.add(ControllerLinkBuilder
+                .linkTo(ControllerLinkBuilder
+                        .methodOn(TripTagController.class)
+                        .deleteTripTagByTag(resource.getTag()))
+                .withRel("delete-trip-tag-action"));
+    }
+
+    public void addLinksToCollection(TripTagResourceCollection collection) {
+
+        collection.setTotalItems(collection.getContent().size());
+
+        collection.add(NavigationLinkBuilder.linkToCurrentRequest().withSelfRel());
+        collection.add(ControllerLinkBuilder
+                .linkTo(ControllerLinkBuilder
+                        .methodOn(TripTagController.class)
+                        .getCreateTripTagForm())
+                .withRel("trip-tag-form"));
     }
 
     public void addLinksToForm(TripTagForm form, String poeTag) {
@@ -61,5 +73,17 @@ public class TripTagResourceAssembler extends IdentifiableResourceAssemblerSuppo
                         .methodOn(TripTagController.class)
                         .createTripTag(poeTag, form))
                 .withRel("create-trip-tag-action"));
+    }
+
+    public TripTagResourceCollection toResourceCollection(List<TripTag> tripTags) {
+
+        List<TripTagResource> tripTagResources = new ArrayList<>();
+
+        tripTagResources.addAll(tripTags.stream().map(this::toResource).collect(Collectors.toList()));
+
+        TripTagResourceCollection collection = new TripTagResourceCollection(tripTagResources);
+        addLinksToCollection(collection);
+
+        return collection;
     }
 }
