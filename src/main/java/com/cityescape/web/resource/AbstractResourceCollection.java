@@ -4,11 +4,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 
 
-/**
- * Date: 27/04/14
- * Time: 08:54
- */
-
 public class AbstractResourceCollection<T> extends Resources<T> {
 
     private Integer totalItems;
