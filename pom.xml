@@ -16,12 +16,19 @@
 
     <properties>
         <liquibase-plugin.version>3.4.1</liquibase-plugin.version>
+        <fest.version>1.4</fest.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>${fest.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
