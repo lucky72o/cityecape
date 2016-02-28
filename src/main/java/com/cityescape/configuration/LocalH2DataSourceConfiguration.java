@@ -17,9 +17,9 @@ import javax.sql.DataSource;
  * H2 data source configuration for non-container managed environments.
  *
  */
-@EnableJpaRepositories(basePackages = {"com.cityescape.repository"})
-@Configuration
-@Profile({ProfileNames.RDBMS_H2})
+//@EnableJpaRepositories(basePackages = {"com.cityescape.repository"})
+//@Configuration
+//@Profile({ProfileNames.RDBMS_H2})
 public class LocalH2DataSourceConfiguration implements DataSourceConfiguration, DisposableBean {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());

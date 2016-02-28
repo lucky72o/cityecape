@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Slava on 20/02/2016.
@@ -42,6 +41,8 @@ public class PoeTagServiceImpl implements PoeTagService {
 
     @Override
     public PoeTag getTag(String ref) throws NoSuchTagException {
+        Assert.notNull(ref);
+
         PoeTag tag = poeTagRepository.findByTag(ref);
         if (tag == null) {
             throw new NoSuchTagException(ref);
@@ -53,6 +54,8 @@ public class PoeTagServiceImpl implements PoeTagService {
 
     @Override
     public void consumeTag(String ref) throws NoSuchTagException {
+        Assert.notNull(ref);
+
         PoeTag tag = poeTagRepository.findByTag(ref);
         if (tag == null) {
             throw new NoSuchTagException(ref);
@@ -66,6 +69,7 @@ public class PoeTagServiceImpl implements PoeTagService {
 
     @Override
     public void consumeTag(PoeTag poeTag) throws NoSuchTagException {
+        Assert.notNull(poeTag);
 
         LOGGER.info("Retrieved the Tag: EntityId [{}], Consumed [{}], Reference [{}]", poeTag.getId(), poeTag.getConsumed(), poeTag.getTag());
 

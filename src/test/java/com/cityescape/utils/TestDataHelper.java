@@ -1,5 +1,6 @@
 package com.cityescape.utils;
 
+import com.cityescape.domain.PoeTag;
 import com.cityescape.domain.TripTag;
 
 import java.util.ArrayList;
@@ -23,5 +24,9 @@ public class TestDataHelper {
         tripTags.add(getTripTagByName("Tag1"));
         tripTags.add(getTripTagByName("Tag2"));
         return tripTags;
+    }
+
+    public static PoeTag getPoeTag() {
+        return new PoeTag("testTag");
     }
 }
