@@ -1,5 +1,8 @@
 package com.cityescape.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -45,5 +48,27 @@ public class PoeTag extends AbstractEntity<Long> implements Serializable {
 
     public void setConsumed(Boolean consumed) {
         this.consumed = consumed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PoeTag poeTag = (PoeTag) o;
+
+        return new EqualsBuilder()
+                .append(tag, poeTag.tag)
+                .append(consumed, poeTag.consumed)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(tag)
+                .append(consumed)
+                .toHashCode();
     }
 }

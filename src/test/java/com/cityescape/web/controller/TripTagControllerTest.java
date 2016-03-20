@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -82,6 +84,9 @@ public class TripTagControllerTest {
                 andExpect(jsonPath("$.content[1].tag", is("Tag2"))).
                 andExpect(jsonPath("$.content[1].description", is("Tag2 Tag")));
 
+        verify(tripTagServiceMock).findAll();
+        verifyNoMoreInteractions(poeTagServiceMock, tripTagServiceMock);
+
     }
 
     @Test
@@ -100,6 +105,9 @@ public class TripTagControllerTest {
                 andExpect(jsonPath("$.tag", is("Tag1"))).
                 andExpect(jsonPath("$.description", is("Tag1 Tag")));
 
+        verify(tripTagServiceMock).findByTag("Tag1");
+        verifyNoMoreInteractions(poeTagServiceMock, tripTagServiceMock);
+
     }
 
     @Test
@@ -111,7 +119,7 @@ public class TripTagControllerTest {
 
         verify(tripTagServiceMock).findByTag("Tag1");
         verify(tripTagServiceMock).delete(tripTag);
-        verifyNoMoreInteractions(tripTagServiceMock);
+        verifyNoMoreInteractions(poeTagServiceMock, tripTagServiceMock);
 
     }
 
@@ -126,6 +134,9 @@ public class TripTagControllerTest {
                 andExpect(jsonPath("$.links[0].href", containsString("/triptags/form"))).
                 andExpect(jsonPath("$.links[1].rel", is("create-trip-tag-action"))).
                 andExpect(jsonPath("$.links[1].href", containsString("/triptags/create/" + POE_TAG)));
+
+        verify(poeTagServiceMock).createTag(anyString());
+        verifyNoMoreInteractions(poeTagServiceMock, tripTagServiceMock);
 
     }
 
@@ -150,5 +161,10 @@ public class TripTagControllerTest {
                 andExpect(jsonPath("$.links", hasSize(1))).
                 andExpect(jsonPath("$.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.links[0].href", containsString("/triptags/Tag1")));
+
+        verify(poeTagServiceMock).getTag(POE_TAG);
+        verify(poeTagServiceMock).consumeTag(POE_TAG);
+        verify(tripTagServiceMock).create(any(TripTag.class));
+        verifyNoMoreInteractions(poeTagServiceMock, tripTagServiceMock);
     }
 }
