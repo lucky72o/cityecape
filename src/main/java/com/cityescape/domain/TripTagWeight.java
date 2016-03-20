@@ -21,12 +21,16 @@ public class TripTagWeight implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "TRIP_TAG_ID")
     private TripTag tripTag;
 
     @Column(name = "WEIGHT")
     private BigDecimal weight;
+
+    @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "TRIP_ID")
+    private Trip trip;
 
     public Long getId() {
         return id;
@@ -50,6 +54,14 @@ public class TripTagWeight implements Serializable {
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
     @Override

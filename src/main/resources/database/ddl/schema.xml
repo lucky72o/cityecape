@@ -47,6 +47,36 @@
     </changeSet>
 
     <changeSet author="slava" id="3">
+        <comment>Create TRIP table</comment>
+        <createTable tableName="TRIP">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="TRIP"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="slava" id="4">
+        <comment>Adding unique constraint for NAME column in TRIP table</comment>
+        <addUniqueConstraint tableName="TRIP"
+                             columnNames="NAME"
+                             constraintName="UNIQUE_TRIP_NAME"/>
+        <rollback>
+            <dropUniqueConstraint constraintName="UNIQUE_TRIP_NAME" tableName="TRIP"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="slava" id="5">
         <comment>Create TRIP_TAG_WEIGHT table</comment>
         <createTable tableName="TRIP_TAG_WEIGHT">
 
@@ -54,7 +84,10 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="TRIP_TAG_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints foreignKeyName="TRIP_TAG_ID_FK" references="TRIP_TAG(id)" nullable="false" />
+            </column>
+            <column name="TRIP_ID" type="BIGINT">
+                <constraints foreignKeyName="TRIP_ID_FK" references="TRIP(id)" nullable="false" />
             </column>
             <column name="WEIGHT" type="DECIMAL">
                 <constraints nullable="true"/>

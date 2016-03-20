@@ -59,6 +59,7 @@ public class PoeTag extends AbstractEntity<Long> implements Serializable {
         PoeTag poeTag = (PoeTag) o;
 
         return new EqualsBuilder()
+                .append(id, poeTag.id)
                 .append(tag, poeTag.tag)
                 .append(consumed, poeTag.consumed)
                 .isEquals();
@@ -67,6 +68,7 @@ public class PoeTag extends AbstractEntity<Long> implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(id)
                 .append(tag)
                 .append(consumed)
                 .toHashCode();
