@@ -16,21 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/")
 public class IndexController {
 
-    public static final String RELS = "rels";
-
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<VoidResource> getApiIndex() {
 
         VoidResource index = new VoidResource();
 
-        index.add(ControllerLinkBuilder.linkTo(IndexController.class)
-                .slash("rels")
-                .withRel(RELS));
-
         index.add(ControllerLinkBuilder.linkTo(TripTagController.class)
                 .withRel("triptags"));
 
-        return new ResponseEntity<VoidResource>(index, HttpStatus.OK);
+        return new ResponseEntity<>(index, HttpStatus.OK);
     }
 
 }
