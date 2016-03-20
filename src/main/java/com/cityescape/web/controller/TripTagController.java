@@ -24,14 +24,14 @@ import java.util.List;
  * Created by Slava on 15/02/2016.
  */
 @RestController
-@RequestMapping(value = "triptags", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/triptags", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TripTagController extends AbstractController {
 
     @Autowired
     private TripTagService tripTagService;
 
     @Autowired
-    TripTagResourceAssembler tripTagResourceAssembler;
+    private TripTagResourceAssembler tripTagResourceAssembler;
 
     @Autowired
     private PoeTagService poeTagService;
@@ -86,6 +86,6 @@ public class TripTagController extends AbstractController {
         TripTag tripTag = tripTagService.create(TripTagTransformer.transformToTripTag(form));
         TripTagResource tripTagResource = tripTagResourceAssembler.toResource(tripTag);
 
-        return new ResponseEntity<>(tripTagResource, HttpStatus.OK);
+        return new ResponseEntity<>(tripTagResource, HttpStatus.CREATED);
     }
 }

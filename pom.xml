@@ -17,6 +17,7 @@
     <properties>
         <liquibase-plugin.version>3.4.1</liquibase-plugin.version>
         <fest.version>1.4</fest.version>
+        <jsonpath.version>2.0.0</jsonpath.version>
     </properties>
 
     <dependencies>
@@ -25,6 +26,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${jsonpath.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert</artifactId>
