@@ -1,10 +1,12 @@
 package com.cityescape.utils;
 
 import com.cityescape.domain.PoeTag;
+import com.cityescape.domain.Trip;
 import com.cityescape.domain.TripTag;
+import com.cityescape.domain.TripTagWeight;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * Created by Slava on 14/02/2016.
@@ -28,5 +30,45 @@ public class TestDataHelper {
 
     public static PoeTag getPoeTag() {
         return new PoeTag("testTag");
+    }
+
+    public static Trip getTrip(String name) {
+        Trip trip = new Trip();
+        trip.setId(1L);
+        trip.setName(name);
+        trip.setDescription("description");
+        trip.setTripTagWeights(getTripTagWeights());
+
+        return trip;
+    }
+
+    private static Set<TripTagWeight> getTripTagWeights() {
+
+        Set<TripTagWeight> tripTagWeights = new HashSet<>();
+        TripTagWeight tripTagWeight1 = getTripTagWeight(11L);
+        TripTagWeight tripTagWeight2 = getTripTagWeight(22L);
+        tripTagWeights.add(tripTagWeight1);
+        tripTagWeights.add(tripTagWeight2);
+
+        return tripTagWeights;
+    }
+
+    private static TripTagWeight getTripTagWeight() {
+        return getTripTagWeight(11L);
+    }
+
+    private static TripTagWeight getTripTagWeight(Long id) {
+        TripTagWeight tripTagWeight = new TripTagWeight();
+        tripTagWeight.setId(id);
+        tripTagWeight.setTrip(new Trip());
+        tripTagWeight.setTripTag(getTripTag());
+        tripTagWeight.setWeight(BigDecimal.valueOf(0.2));
+        return tripTagWeight;
+    }
+
+    public static List<Trip> getTrips() {
+        Trip trip1 = getTrip("Trip1");
+        Trip trip2 = getTrip("Trip2");
+        return Arrays.asList(trip1, trip2);
     }
 }

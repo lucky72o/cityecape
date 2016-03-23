@@ -21,6 +21,9 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "NAME")
+    private String name;
+
     @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TripTagWeight> tripTagWeights = new HashSet<>();
 
@@ -51,10 +54,19 @@ public class Trip {
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", this.id)
+                .append("name", this.name)
                 .append("description", this.description)
                 .toString();
     }
@@ -69,6 +81,7 @@ public class Trip {
 
         return new EqualsBuilder()
                 .append(id, trip.id)
+                .append(name, trip.name)
                 .append(tripTagWeights, trip.tripTagWeights)
                 .append(description, trip.description)
                 .isEquals();
@@ -78,6 +91,7 @@ public class Trip {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
+                .append(name)
                 .append(tripTagWeights)
                 .append(description)
                 .toHashCode();
