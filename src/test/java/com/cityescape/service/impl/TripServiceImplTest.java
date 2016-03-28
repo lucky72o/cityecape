@@ -90,6 +90,7 @@ public class TripServiceImplTest {
         assertThat(resultTrip.getDescription()).isEqualTo(mockTrip.getDescription());
         assertThat(resultTrip.getTripTagWeights().size()).isEqualTo(mockTrip.getTripTagWeights().size());
 
+        verify(tripRepositoryMock).findByName(mockTrip.getName());
         verify(tripRepositoryMock).save(mockTrip);
         verifyNoMoreInteractions(tripRepositoryMock);
     }

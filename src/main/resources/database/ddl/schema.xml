@@ -19,6 +19,8 @@
             <column name="CONSUMED" type="BOOLEAN" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
+            <column name="UPDATED_DATE" type="TIMESTAMP"/>
+            <column name="CREATED_DATE" type="TIMESTAMP"/>
         </createTable>
 
         <rollback>
@@ -39,6 +41,8 @@
             <column name="DESCRIPTION" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
+            <column name="UPDATED_DATE" type="TIMESTAMP"/>
+            <column name="CREATED_DATE" type="TIMESTAMP"/>
         </createTable>
 
         <rollback>
@@ -59,6 +63,8 @@
             <column name="NAME" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
+            <column name="UPDATED_DATE" type="TIMESTAMP"/>
+            <column name="CREATED_DATE" type="TIMESTAMP"/>
         </createTable>
 
         <rollback>
@@ -95,6 +101,8 @@
             <column name="VOTES" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="UPDATED_DATE" type="TIMESTAMP"/>
+            <column name="CREATED_DATE" type="TIMESTAMP"/>
         </createTable>
 
         <rollback>

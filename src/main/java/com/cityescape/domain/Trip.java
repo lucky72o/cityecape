@@ -5,6 +5,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "TRIP")
-public class Trip {
+public class Trip extends AbstractEntity<Long> implements Serializable {
 
     @Id
     @Column(name = "ID")
