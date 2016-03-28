@@ -92,6 +92,9 @@
             <column name="WEIGHT" type="DECIMAL">
                 <constraints nullable="true"/>
             </column>
+            <column name="VOTES" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <rollback>

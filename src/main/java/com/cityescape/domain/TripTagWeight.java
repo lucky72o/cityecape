@@ -28,6 +28,9 @@ public class TripTagWeight implements Serializable {
     @Column(name = "WEIGHT")
     private BigDecimal weight;
 
+    @Column(name = "VOTES")
+    private Long numberOfVotes;
+
     @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "TRIP_ID")
     private Trip trip;
@@ -64,12 +67,21 @@ public class TripTagWeight implements Serializable {
         this.trip = trip;
     }
 
+    public Long getNumberOfVotes() {
+        return numberOfVotes;
+    }
+
+    public void setNumberOfVotes(Long numberOfVotes) {
+        this.numberOfVotes = numberOfVotes;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("tripTag", tripTag)
                 .append("weight", weight)
+                .append("weight", numberOfVotes)
                 .toString();
     }
 
@@ -85,6 +97,7 @@ public class TripTagWeight implements Serializable {
                 .append(id, that.id)
                 .append(tripTag, that.tripTag)
                 .append(weight, that.weight)
+                .append(numberOfVotes, that.numberOfVotes)
                 .isEquals();
     }
 
@@ -94,6 +107,7 @@ public class TripTagWeight implements Serializable {
                 .append(id)
                 .append(tripTag)
                 .append(weight)
+                .append(numberOfVotes)
                 .toHashCode();
     }
 }
