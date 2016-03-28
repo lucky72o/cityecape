@@ -1,6 +1,7 @@
 package com.cityescape.service.impl;
 
 import com.cityescape.domain.Trip;
+import com.cityescape.exception.DuplicateDataException;
 import com.cityescape.exception.TripNotFoundException;
 import com.cityescape.repository.TripRepository;
 import com.cityescape.service.TripService;
@@ -39,6 +40,10 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public Trip save(Trip trip) {
+        Trip tripRetrieved = tripRepository.findByName(trip.getName());
+        if (tripRetrieved != null) {
+            throw new DuplicateDataException("Failed to create new trip. Trip with name [ " + trip.getName() + " ] is already exist");
+        }
         return tripRepository.save(trip);
     }
 }

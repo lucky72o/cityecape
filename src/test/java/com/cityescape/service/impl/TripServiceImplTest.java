@@ -1,6 +1,7 @@
 package com.cityescape.service.impl;
 
 import com.cityescape.domain.Trip;
+import com.cityescape.exception.DuplicateDataException;
 import com.cityescape.exception.TripNotFoundException;
 import com.cityescape.repository.TripRepository;
 import com.cityescape.service.TripService;
@@ -91,5 +92,14 @@ public class TripServiceImplTest {
 
         verify(tripRepositoryMock).save(mockTrip);
         verifyNoMoreInteractions(tripRepositoryMock);
+    }
+
+    @Test(expected = DuplicateDataException.class)
+    public void shouldThrowExceptionIfTripAlreadyExist() throws Exception {
+
+        Trip mockTrip = TestDataHelper.getTrip(TRIP_NAME);
+        when(tripRepositoryMock.findByName(TRIP_NAME)).thenReturn(mockTrip);
+
+        tripService.save(mockTrip);
     }
 }
