@@ -24,6 +24,7 @@ public class PoeTagServiceImplTest {
 
     @InjectMocks
     PoeTagService poeTagService = new PoeTagServiceImpl();
+
     @Mock
     private PoeTagRepository poeTagRepositoryMock;
 
@@ -36,7 +37,7 @@ public class PoeTagServiceImplTest {
     public void shouldCreatePoeTag() throws Exception {
         poeTagService.createTag("testUri");
         verify(poeTagRepositoryMock, times(1)).save(any(PoeTag.class));
-        verifyNoMoreInteractions(poeTagRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -58,7 +59,7 @@ public class PoeTagServiceImplTest {
         assertThat(actual.getConsumed()).isEqualTo(false);
 
         verify(poeTagRepositoryMock, times(1)).findByTag(testTagName);
-        verifyNoMoreInteractions(poeTagRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test(expected = NoSuchTagException.class)
@@ -89,7 +90,7 @@ public class PoeTagServiceImplTest {
 
         verify(poeTagRepositoryMock, times(1)).findByTag(testTagName);
         verify(poeTagRepositoryMock, times(1)).saveAndFlush(any(PoeTag.class));
-        verifyNoMoreInteractions(poeTagRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test
@@ -98,6 +99,10 @@ public class PoeTagServiceImplTest {
         poeTagService.consumeTag(poeTag);
 
         verify(poeTagRepositoryMock, times(1)).saveAndFlush(any(PoeTag.class));
+        verifyNoMoreInteractionsCommon();
+    }
+
+    private void verifyNoMoreInteractionsCommon() {
         verifyNoMoreInteractions(poeTagRepositoryMock);
     }
 }

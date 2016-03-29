@@ -58,7 +58,7 @@ public class TripServiceImplTest {
         assertThat(result.getTripTagWeights()).hasSize(2);
 
         verify(tripRepositoryMock).findByName(TRIP_NAME);
-        verifyNoMoreInteractions(tripRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test
@@ -74,7 +74,7 @@ public class TripServiceImplTest {
         assertThat(resultTrips.get(1).getName()).isEqualTo("Trip2");
 
         verify(tripRepositoryMock).findAll();
-        verifyNoMoreInteractions(tripRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class TripServiceImplTest {
 
         verify(tripRepositoryMock).findByName(mockTrip.getName());
         verify(tripRepositoryMock).save(mockTrip);
-        verifyNoMoreInteractions(tripRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test(expected = DuplicateDataException.class)
@@ -102,5 +102,9 @@ public class TripServiceImplTest {
         when(tripRepositoryMock.findByName(TRIP_NAME)).thenReturn(mockTrip);
 
         tripService.create(mockTrip);
+    }
+
+    private void verifyNoMoreInteractionsCommon() {
+        verifyNoMoreInteractions(tripRepositoryMock);
     }
 }

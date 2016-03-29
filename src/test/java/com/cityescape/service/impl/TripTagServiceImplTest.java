@@ -50,7 +50,7 @@ public class TripTagServiceImplTest {
         assertThat(actual.getDescription()).isEqualTo("Test Tag");
 
         verify(tripTagRepositoryMock, times(1)).findByTag("testTag");
-        verifyNoMoreInteractions(tripTagRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test(expected = DataRetrievalFailureException.class)
@@ -71,7 +71,7 @@ public class TripTagServiceImplTest {
         assertThat(actual).isNotNull();
         assertThat(actual.size()).isEqualTo(2);
         verify(tripTagRepositoryMock, times(1)).findAll();
-        verifyNoMoreInteractions(tripTagRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TripTagServiceImplTest {
 
         verify(tripTagRepositoryMock, times(1)).findByTag("testTag");
         verify(tripTagRepositoryMock, times(1)).save(any(TripTag.class));
-        verifyNoMoreInteractions(tripTagRepositoryMock);
+        verifyNoMoreInteractionsCommon();
     }
 
     @Test(expected = EntityToSaveIsNullException.class)
@@ -109,6 +109,10 @@ public class TripTagServiceImplTest {
         tripTagService.delete(tripTag);
 
         verify(tripTagRepositoryMock, times(1)).delete(any(TripTag.class));
+        verifyNoMoreInteractionsCommon();
+    }
+
+    private void verifyNoMoreInteractionsCommon() {
         verifyNoMoreInteractions(tripTagRepositoryMock);
     }
 }
