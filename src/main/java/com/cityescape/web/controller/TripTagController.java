@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * Created by Slava on 15/02/2016.
  */
 @RestController
+@Transactional
 @RequestMapping(value = "/triptags", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TripTagController extends AbstractController {
 

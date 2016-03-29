@@ -41,7 +41,8 @@ public class IndexControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.links[0].rel", is("triptags")))
-                .andExpect(jsonPath("$.links[0].href", containsString("/triptags")));
+                .andExpect(jsonPath("$.links[0].href", containsString("/triptags")))
+                .andExpect(jsonPath("$.links[1].rel", is("trips")))
+                .andExpect(jsonPath("$.links[1].href", containsString("/trips")));
     }
-
 }

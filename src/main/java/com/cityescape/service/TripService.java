@@ -12,5 +12,5 @@ public interface TripService {
 
     List<Trip> findAllTrips();
 
-    Trip save(Trip mockTrip);
+    Trip create(Trip mockTrip);
 }

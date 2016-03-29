@@ -7,8 +7,8 @@ import com.cityescape.repository.TripRepository;
 import com.cityescape.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class TripServiceImpl implements TripService {
 
     @Autowired
@@ -39,7 +40,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Trip save(Trip trip) {
+    public Trip create(Trip trip) {
         Trip tripRetrieved = tripRepository.findByName(trip.getName());
         if (tripRetrieved != null) {
             throw new DuplicateDataException("Failed to create new trip. Trip with name [ " + trip.getName() + " ] is already exist");

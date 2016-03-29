@@ -83,7 +83,7 @@ public class TripServiceImplTest {
         Trip mockTrip = TestDataHelper.getTrip(TRIP_NAME);
         when(tripRepositoryMock.save(mockTrip)).thenReturn(mockTrip);
 
-        Trip resultTrip = tripService.save(mockTrip);
+        Trip resultTrip = tripService.create(mockTrip);
 
         assertThat(resultTrip).isNotNull();
         assertThat(resultTrip.getName()).isEqualTo(TRIP_NAME);
@@ -101,6 +101,6 @@ public class TripServiceImplTest {
         Trip mockTrip = TestDataHelper.getTrip(TRIP_NAME);
         when(tripRepositoryMock.findByName(TRIP_NAME)).thenReturn(mockTrip);
 
-        tripService.save(mockTrip);
+        tripService.create(mockTrip);
     }
 }

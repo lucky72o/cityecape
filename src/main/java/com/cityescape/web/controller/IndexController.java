@@ -24,6 +24,9 @@ public class IndexController {
         index.add(ControllerLinkBuilder.linkTo(TripTagController.class)
                 .withRel("triptags"));
 
+        index.add(ControllerLinkBuilder.linkTo(TripController.class)
+                .withRel("trips"));
+
         return new ResponseEntity<>(index, HttpStatus.OK);
     }
 
