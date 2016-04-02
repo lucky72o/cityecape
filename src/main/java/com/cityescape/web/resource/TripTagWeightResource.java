@@ -1,5 +1,8 @@
 package com.cityescape.web.resource;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
@@ -7,6 +10,7 @@ import java.math.BigDecimal;
 /**
  * Created by Slava on 28/03/2016.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TripTagWeightResource extends ResourceSupport {
 
     private Long tripTagWeightId;
@@ -44,5 +48,33 @@ public class TripTagWeightResource extends ResourceSupport {
 
     public void setNumberOfVotes(Long numberOfVotes) {
         this.numberOfVotes = numberOfVotes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TripTagWeightResource that = (TripTagWeightResource) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(tripTagWeightId, that.tripTagWeightId)
+                .append(tripTag, that.tripTag)
+                .append(weight, that.weight)
+                .append(numberOfVotes, that.numberOfVotes)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(tripTagWeightId)
+                .append(tripTag)
+                .append(weight)
+                .append(numberOfVotes)
+                .toHashCode();
     }
 }

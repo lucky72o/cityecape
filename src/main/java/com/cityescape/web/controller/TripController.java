@@ -4,7 +4,6 @@ import com.cityescape.domain.PoeTag;
 import com.cityescape.domain.Trip;
 import com.cityescape.service.PoeTagService;
 import com.cityescape.service.TripService;
-import com.cityescape.service.impl.TripServiceImpl;
 import com.cityescape.web.assemblers.TripResourceAssembler;
 import com.cityescape.web.form.TripForm;
 import com.cityescape.web.resource.TripResource;
@@ -35,7 +34,7 @@ public class TripController extends AbstractController {
     private TripService tripService;
 
     @Autowired
-    private TripResourceAssembler assembler;
+    private TripResourceAssembler tripResourceAssembler;
 
     @Autowired
     private TripTransformer tripTransformer;
@@ -46,7 +45,7 @@ public class TripController extends AbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<TripResourceCollection> getTrips() {
         List<Trip> trips = tripService.findAllTrips();
-        TripResourceCollection tripResourceCollection = assembler.toResourceCollection(trips);
+        TripResourceCollection tripResourceCollection = tripResourceAssembler.toResourceCollection(trips);
 
         return new ResponseEntity<>(tripResourceCollection, HttpStatus.OK);
     }
@@ -57,7 +56,7 @@ public class TripController extends AbstractController {
         TripForm form = new TripForm();
 
         String poeTag = poeTagService.createTag(ServletUriComponentsBuilder.fromCurrentRequest().build().toString());
-        assembler.addLinksToForm(form, poeTag);
+        tripResourceAssembler.addLinksToForm(form, poeTag);
 
         return new ResponseEntity<>(form, HttpStatus.OK);
     }
@@ -78,7 +77,7 @@ public class TripController extends AbstractController {
 
         poeTagService.consumeTag(poeTag);
         Trip trip = tripService.create(tripTransformer.toEntity(form));
-        TripResource tripResource = assembler.toResource(trip);
+        TripResource tripResource = tripResourceAssembler.toResource(trip);
 
         return new ResponseEntity<>(tripResource, HttpStatus.CREATED);
     }

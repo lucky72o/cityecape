@@ -14,7 +14,9 @@ import java.util.*;
 public class TestDataHelper {
 
     public static TripTag getTripTag() {
-        return new TripTag("testTag", "Test Tag");
+        TripTag tripTag = new TripTag("testTag", "Test Tag");
+        tripTag.setId(100L);
+        return tripTag;
     }
 
     public static TripTag getTripTagByName(String name) {
@@ -63,6 +65,7 @@ public class TestDataHelper {
         tripTagWeight.setTrip(new Trip());
         tripTagWeight.setTripTag(getTripTag());
         tripTagWeight.setWeight(BigDecimal.valueOf(0.2));
+        tripTagWeight.setNumberOfVotes(100L);
         return tripTagWeight;
     }
 
