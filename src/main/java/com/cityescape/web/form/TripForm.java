@@ -1,5 +1,6 @@
 package com.cityescape.web.form;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.Size;
@@ -13,6 +14,7 @@ public class TripForm extends ResourceSupport {
 
     @Size(min = 1, max = 255)
     private String name;
+    @NotEmpty(message = "tripTagWeights must not be empty")
     private Set<TripTagWeightForm> tripTagWeights = new HashSet<>();
     @Size(min = 1, max = 255)
     private String description;

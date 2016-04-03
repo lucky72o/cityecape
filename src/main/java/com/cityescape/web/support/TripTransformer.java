@@ -8,6 +8,7 @@ import com.cityescape.web.form.TripTagWeightForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +40,7 @@ public class TripTransformer extends AbstractTransformer<TripForm, Trip> {
 
     private TripTagWeight getTripTagWeight(Trip trip, TripTagWeightForm tripTagWeightResource) {
         TripTagWeight tripTagWeight = new TripTagWeight();
-        tripTagWeight.setWeight(tripTagWeightResource.getWeight());
+        tripTagWeight.setWeight(BigDecimal.valueOf(tripTagWeightResource.getWeight()));
         tripTagWeight.setTrip(trip);
         tripTagWeight.setNumberOfVotes(tripTagWeightResource.getNumberOfVotes());
         tripTagWeight.setTripTag(tripTagService.findByTag(tripTagWeightResource.getTripTagName()));

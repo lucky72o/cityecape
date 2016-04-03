@@ -89,7 +89,7 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
         TripTagWeightResource tripTagWeightResource = new TripTagWeightResource();
         tripTagWeightResource.setTripTagWeightId(tripTagWeight.getId());
         tripTagWeightResource.setNumberOfVotes(tripTagWeight.getNumberOfVotes());
-        tripTagWeightResource.setWeight(tripTagWeight.getWeight());
+        tripTagWeightResource.setWeight(tripTagWeight.getWeight().doubleValue());
         tripTagWeightResource.setTripTag(tripTagResourceAssembler.toResource(tripTagWeight.getTripTag()));
         return tripTagWeightResource;
     }

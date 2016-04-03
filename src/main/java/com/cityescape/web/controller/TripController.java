@@ -2,6 +2,7 @@ package com.cityescape.web.controller;
 
 import com.cityescape.domain.PoeTag;
 import com.cityescape.domain.Trip;
+import com.cityescape.exception.FormValidationException;
 import com.cityescape.service.PoeTagService;
 import com.cityescape.service.TripService;
 import com.cityescape.web.assemblers.TripResourceAssembler;
@@ -69,7 +70,7 @@ public class TripController extends AbstractController {
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/create/{poeTag}", method = RequestMethod.POST)
     public HttpEntity<TripResource> createTrip(@PathVariable("poeTag") String poeTag, @Valid @RequestBody TripForm form) {
-
+        validateTripFor(form);
         PoeTag poeTagRetrieved = poeTagService.getTag(poeTag);
         if (poeTagRetrieved == null || poeTagRetrieved.getConsumed()) {
             return methodNotAllowed();
@@ -80,5 +81,15 @@ public class TripController extends AbstractController {
         TripResource tripResource = tripResourceAssembler.toResource(trip);
 
         return new ResponseEntity<>(tripResource, HttpStatus.CREATED);
+    }
+
+    // todo: move validateTripFor to separated validator
+    private void validateTripFor(TripForm form) {
+        form.getTripTagWeights().forEach(tripTagWeight -> {
+            double weight = tripTagWeight.getWeight();
+            if (weight < 0.1 || weight > 1) {
+                throw new FormValidationException("Trip tag weight must be in range between 0.1 and 1.0");
+            }
+        });
     }
 }

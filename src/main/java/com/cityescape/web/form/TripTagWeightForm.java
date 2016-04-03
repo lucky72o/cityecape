@@ -5,7 +5,6 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 
 /**
  * Created by Slava on 28/03/2016.
@@ -17,7 +16,7 @@ public class TripTagWeightForm extends ResourceSupport {
 
     @Range(min = 0, max = 1)
     @NotNull
-    private BigDecimal weight;
+    private double weight;
 
     @Range(min = 0, max = 999)
     private long numberOfVotes;
@@ -30,11 +29,11 @@ public class TripTagWeightForm extends ResourceSupport {
         this.tripTagName = tripTagName;
     }
 
-    public BigDecimal getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(BigDecimal weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

@@ -5,8 +5,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.math.BigDecimal;
-
 /**
  * Created by Slava on 28/03/2016.
  */
@@ -15,7 +13,7 @@ public class TripTagWeightResource extends ResourceSupport {
 
     private Long tripTagWeightId;
     private TripTagResource tripTag;
-    private BigDecimal weight;
+    private double weight;
     private Long numberOfVotes;
 
     public Long getTripTagWeightId() {
@@ -34,11 +32,11 @@ public class TripTagWeightResource extends ResourceSupport {
         this.tripTag = tripTag;
     }
 
-    public BigDecimal getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(BigDecimal weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
