@@ -2,6 +2,7 @@ package com.cityescape.web.controller;
 
 import com.cityescape.domain.PoeTag;
 import com.cityescape.domain.Trip;
+import com.cityescape.enums.TripStatus;
 import com.cityescape.exception.FormValidationException;
 import com.cityescape.service.PoeTagService;
 import com.cityescape.service.TripService;
@@ -64,21 +65,37 @@ public class TripController extends AbstractController {
 
     @RequestMapping(value = "/{tripName}", method = RequestMethod.GET)
     public HttpEntity<TripResource> getTripByName(@PathVariable("tripName") String tripName) {
-        return null;
+        Trip tripTag = tripService.findByName(tripName);
+        TripResource resource = tripResourceAssembler.toResource(tripTag);
+
+        tripResourceAssembler.addLinksToResource(resource);
+
+        return new ResponseEntity<>(resource, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{tripName}", method = RequestMethod.DELETE)
+    public HttpEntity<TripResource> deleteTripTagByName(@PathVariable("tripName") String tripName) {
+
+        Trip trip = tripService.findByName(tripName);
+        tripService.delete(trip);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/create/{poeTag}", method = RequestMethod.POST)
     public HttpEntity<TripResource> createTrip(@PathVariable("poeTag") String poeTag, @Valid @RequestBody TripForm form) {
         validateTripFor(form);
+
         PoeTag poeTagRetrieved = poeTagService.getTag(poeTag);
         if (poeTagRetrieved == null || poeTagRetrieved.getConsumed()) {
             return methodNotAllowed();
         }
 
         poeTagService.consumeTag(poeTag);
-        Trip trip = tripService.create(tripTransformer.toEntity(form));
-        TripResource tripResource = tripResourceAssembler.toResource(trip);
+        Trip trip = tripTransformer.toEntity(form);
+        trip.setTripStatus(TripStatus.NEW);
+        Trip savedTrip = tripService.create(trip);
+        TripResource tripResource = tripResourceAssembler.toResource(savedTrip);
 
         return new ResponseEntity<>(tripResource, HttpStatus.CREATED);
     }

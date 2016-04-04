@@ -12,8 +12,9 @@ public class TripResource extends ResourceSupport {
 
     private Long tripId;
     private String name;
-    private Set<TripTagWeightResource> tripTagWeights = new HashSet<>();
+    private String status;
     private String description;
+    private Set<TripTagWeightResource> tripTagWeights = new HashSet<>();
 
     public Long getTripId() {
         return tripId;
@@ -45,5 +46,13 @@ public class TripResource extends ResourceSupport {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

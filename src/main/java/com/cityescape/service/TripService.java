@@ -13,4 +13,6 @@ public interface TripService {
     List<Trip> findAllTrips();
 
     Trip create(Trip mockTrip);
+
+    void delete(Trip trip);
 }

@@ -38,6 +38,7 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
         resource.setName(trip.getName());
         resource.setDescription(trip.getDescription());
         resource.setTripId(trip.getId());
+        resource.setStatus(trip.getTripStatus().name());
         addWeightsToResource(trip, resource);
 
         resource.add((ControllerLinkBuilder.linkTo((ControllerLinkBuilder.methodOn(TripController.class)
@@ -68,6 +69,19 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
                 .withRel("create-trip-action"));
     }
 
+    public void addLinksToResource(TripResource resource) {
+        resource.add(ControllerLinkBuilder
+                .linkTo(TripController.class)
+                .withRel("trips"));
+
+        resource.add(ControllerLinkBuilder
+                .linkTo(ControllerLinkBuilder
+                        .methodOn(TripController.class)
+                        .deleteTripTagByName(resource.getName()))
+                .withRel("delete-trip-action"));
+
+    }
+
     private void addLinksToCollection(TripResourceCollection collection) {
         collection.setTotalItems(collection.getContent().size());
 
@@ -93,4 +107,6 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
         tripTagWeightResource.setTripTag(tripTagResourceAssembler.toResource(tripTagWeight.getTripTag()));
         return tripTagWeightResource;
     }
+
+
 }

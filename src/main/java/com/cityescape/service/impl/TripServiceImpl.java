@@ -2,6 +2,7 @@ package com.cityescape.service.impl;
 
 import com.cityescape.domain.Trip;
 import com.cityescape.exception.DuplicateDataException;
+import com.cityescape.exception.IllegalTripActionException;
 import com.cityescape.exception.TripNotFoundException;
 import com.cityescape.repository.TripRepository;
 import com.cityescape.service.TripService;
@@ -46,5 +47,18 @@ public class TripServiceImpl implements TripService {
             throw new DuplicateDataException("Failed to create new trip. Trip with name [ " + trip.getName() + " ] is already exist");
         }
         return tripRepository.save(trip);
+    }
+
+    @Override
+    public void delete(Trip trip) {
+        if (trip == null) {
+            throw new IllegalTripActionException("Trip to delete must not be null.");
+        }
+
+        if (!trip.isValidToDelete()) {
+            throw new IllegalTripActionException("Trip with name [ " + trip.getName() + " ] is not allowed to delete.");
+        }
+
+        tripRepository.delete(trip);
     }
 }

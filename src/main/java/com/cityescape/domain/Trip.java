@@ -1,5 +1,6 @@
 package com.cityescape.domain;
 
+import com.cityescape.enums.TripStatus;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -24,6 +25,9 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
 
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "TRIP_STATUS")
+    private TripStatus tripStatus;
 
     @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TripTagWeight> tripTagWeights = new HashSet<>();
@@ -63,12 +67,21 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
         this.name = name;
     }
 
+    public TripStatus getTripStatus() {
+        return tripStatus;
+    }
+
+    public void setTripStatus(TripStatus tripStatus) {
+        this.tripStatus = tripStatus;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", this.id)
                 .append("name", this.name)
                 .append("description", this.description)
+                .append("tripStatus", this.tripStatus)
                 .toString();
     }
 
@@ -85,6 +98,7 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
                 .append(name, trip.name)
                 .append(tripTagWeights, trip.tripTagWeights)
                 .append(description, trip.description)
+                .append(tripStatus, trip.tripStatus)
                 .isEquals();
     }
 
@@ -95,6 +109,11 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
                 .append(name)
                 .append(tripTagWeights)
                 .append(description)
+                .append(tripStatus)
                 .toHashCode();
+    }
+
+    public boolean isValidToDelete() {
+        return !tripStatus.equals(TripStatus.ACTIVE);
     }
 }

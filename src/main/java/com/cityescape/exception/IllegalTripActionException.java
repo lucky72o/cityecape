@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Time: 10:12
  */
 @ResponseStatus(value = HttpStatus.CONFLICT)
-public class DuplicateDataException extends RuntimeException {
-    public DuplicateDataException() {
+public class IllegalTripActionException extends RuntimeException {
+    public IllegalTripActionException() {
     }
 
-    public DuplicateDataException(String message) {
+    public IllegalTripActionException(String message) {
         super(message);
     }
 
-    public DuplicateDataException(String message, Throwable chainedException) {
+    public IllegalTripActionException(String message, Throwable chainedException) {
         super(message, chainedException);
     }
 }

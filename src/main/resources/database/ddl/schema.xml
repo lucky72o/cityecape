@@ -61,7 +61,10 @@
                 <constraints nullable="true"/>
             </column>
             <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRIP_STATUS" type="VARCHAR(100)" defaultValue="NEW">
+                <constraints nullable="false"/>
             </column>
             <column name="UPDATED_DATE" type="TIMESTAMP"/>
             <column name="CREATED_DATE" type="TIMESTAMP"/>

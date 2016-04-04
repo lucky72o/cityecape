@@ -2,7 +2,9 @@ package com.cityescape.service.impl;
 
 import com.cityescape.domain.Trip;
 import com.cityescape.exception.DuplicateDataException;
+import com.cityescape.exception.IllegalTripActionException;
 import com.cityescape.exception.TripNotFoundException;
+import com.cityescape.enums.TripStatus;
 import com.cityescape.repository.TripRepository;
 import com.cityescape.service.TripService;
 import com.cityescape.utils.TestDataHelper;
@@ -30,9 +32,12 @@ public class TripServiceImplTest {
     @Mock
     private TripRepository tripRepositoryMock;
 
+    Trip trip;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        trip = TestDataHelper.getTrip(TRIP_NAME);
     }
 
     @Test(expected = TripNotFoundException.class)
@@ -45,7 +50,6 @@ public class TripServiceImplTest {
 
     @Test
     public void shouldFindTripByName() throws Exception {
-        Trip trip = TestDataHelper.getTrip(TRIP_NAME);
 
         when(tripRepositoryMock.findByName(TRIP_NAME)).thenReturn(trip);
 
@@ -80,28 +84,45 @@ public class TripServiceImplTest {
     @Test
     public void shouldCreateTrip() throws Exception {
 
-        Trip mockTrip = TestDataHelper.getTrip(TRIP_NAME);
-        when(tripRepositoryMock.save(mockTrip)).thenReturn(mockTrip);
+        when(tripRepositoryMock.save(trip)).thenReturn(trip);
 
-        Trip resultTrip = tripService.create(mockTrip);
+        Trip resultTrip = tripService.create(trip);
 
         assertThat(resultTrip).isNotNull();
         assertThat(resultTrip.getName()).isEqualTo(TRIP_NAME);
-        assertThat(resultTrip.getDescription()).isEqualTo(mockTrip.getDescription());
-        assertThat(resultTrip.getTripTagWeights().size()).isEqualTo(mockTrip.getTripTagWeights().size());
+        assertThat(resultTrip.getDescription()).isEqualTo(trip.getDescription());
+        assertThat(resultTrip.getTripTagWeights().size()).isEqualTo(trip.getTripTagWeights().size());
 
-        verify(tripRepositoryMock).findByName(mockTrip.getName());
-        verify(tripRepositoryMock).save(mockTrip);
+        verify(tripRepositoryMock).findByName(trip.getName());
+        verify(tripRepositoryMock).save(trip);
         verifyNoMoreInteractionsCommon();
     }
 
     @Test(expected = DuplicateDataException.class)
     public void shouldThrowExceptionIfTripAlreadyExist() throws Exception {
 
-        Trip mockTrip = TestDataHelper.getTrip(TRIP_NAME);
-        when(tripRepositoryMock.findByName(TRIP_NAME)).thenReturn(mockTrip);
+        when(tripRepositoryMock.findByName(TRIP_NAME)).thenReturn(trip);
 
-        tripService.create(mockTrip);
+        tripService.create(trip);
+    }
+
+    @Test(expected = IllegalTripActionException.class)
+    public void shouldThrowExceptionWhenDeleteAndTripIsNull() throws Exception {
+        tripService.delete(null);
+    }
+
+    @Test(expected = IllegalTripActionException.class)
+    public void shouldThrowExceptionWhenDeleteTripInActiveStatus() throws Exception {
+        trip.setTripStatus(TripStatus.ACTIVE);
+
+        tripService.delete(trip);
+    }
+
+    @Test
+    public void shouldDeleteTrip() throws Exception {
+        tripService.delete(trip);
+        verify(tripRepositoryMock).delete(trip);
+        verifyNoMoreInteractionsCommon();
     }
 
     private void verifyNoMoreInteractionsCommon() {

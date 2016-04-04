@@ -4,6 +4,7 @@ import com.cityescape.domain.PoeTag;
 import com.cityescape.domain.Trip;
 import com.cityescape.domain.TripTag;
 import com.cityescape.domain.TripTagWeight;
+import com.cityescape.enums.TripStatus;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -36,6 +37,7 @@ public class TestDataHelper {
 
     public static Trip getTrip(String name) {
         Trip trip = new Trip();
+        trip.setTripStatus(TripStatus.NEW);
         trip.setId(1L);
         trip.setName(name);
         trip.setDescription("description");
