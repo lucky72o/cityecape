@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 public class TripServiceImplTest {
 
     public static final String TRIP_NAME = "London";
+    public static final Long TRIP_ID = 1L;
 
     @InjectMocks
     private TripService tripService = new TripServiceImpl();
@@ -62,6 +63,31 @@ public class TripServiceImplTest {
         assertThat(result.getTripTagWeights()).hasSize(2);
 
         verify(tripRepositoryMock).findByName(TRIP_NAME);
+        verifyNoMoreInteractionsCommon();
+    }
+
+    @Test(expected = TripNotFoundException.class)
+    public void shouldThrowTripNotFoundExceptionIfNoTripById() throws Exception {
+
+        when(tripRepositoryMock.findOne(TRIP_ID)).thenReturn(null);
+
+        tripService.findTripById(TRIP_ID);
+    }
+
+    @Test
+    public void shouldFindTripById() throws Exception {
+
+        when(tripRepositoryMock.findOne(TRIP_ID)).thenReturn(trip);
+
+        Trip result = tripService.findTripById(TRIP_ID);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getName()).isEqualTo(trip.getName());
+        assertThat(result.getDescription()).isEqualTo(trip.getDescription());
+        assertThat(result.getId()).isEqualTo(trip.getId());
+        assertThat(result.getTripTagWeights()).hasSize(2);
+
+        verify(tripRepositoryMock).findOne(TRIP_ID);
         verifyNoMoreInteractionsCommon();
     }
 

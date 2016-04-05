@@ -10,6 +10,8 @@ import java.util.List;
 public interface TripService {
     Trip findByName(String tripName);
 
+    Trip findTripById(Long id);
+
     List<Trip> findAllTrips();
 
     Trip create(Trip mockTrip);

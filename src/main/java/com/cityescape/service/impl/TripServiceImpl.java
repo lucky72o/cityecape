@@ -36,6 +36,17 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    public Trip findTripById(Long id) {
+        Trip trip = tripRepository.findOne(id);
+
+        if (trip == null) {
+            throw new TripNotFoundException("Trip with id [ " + id + " ] not found");
+        }
+
+        return trip;
+    }
+
+    @Override
     public List<Trip> findAllTrips() {
         return tripRepository.findAll();
     }
