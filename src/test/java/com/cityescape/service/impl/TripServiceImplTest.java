@@ -151,6 +151,27 @@ public class TripServiceImplTest {
         verifyNoMoreInteractionsCommon();
     }
 
+    @Test(expected = IllegalTripActionException.class)
+    public void shouldThrowExceptionWhenUpdateAndTripIsNull() throws Exception {
+        tripService.updateTrip(null);
+    }
+
+    @Test
+    public void shouldUpdateTrip() throws Exception {
+        when(tripRepositoryMock.save(trip)).thenReturn(trip);
+
+        Trip resultTrip = tripService.updateTrip(trip);
+
+        assertThat(resultTrip).isNotNull();
+        assertThat(resultTrip.getName()).isEqualTo(TRIP_NAME);
+        assertThat(resultTrip.getDescription()).isEqualTo(trip.getDescription());
+        assertThat(resultTrip.getTripTagWeights().size()).isEqualTo(trip.getTripTagWeights().size());
+
+        verify(tripRepositoryMock).save(trip);
+        verifyNoMoreInteractionsCommon();
+
+    }
+
     private void verifyNoMoreInteractionsCommon() {
         verifyNoMoreInteractions(tripRepositoryMock);
     }

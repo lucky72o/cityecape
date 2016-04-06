@@ -116,4 +116,8 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
     public boolean isValidToDelete() {
         return !tripStatus.equals(TripStatus.ACTIVE);
     }
+
+    public boolean isValidToUpdate() {
+        return !tripStatus.equals(TripStatus.ACTIVE);
+    }
 }

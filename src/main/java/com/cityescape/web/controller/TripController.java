@@ -52,17 +52,6 @@ public class TripController extends AbstractController {
         return new ResponseEntity<>(tripResourceCollection, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public HttpEntity<TripForm> getCreateTripForm() {
-
-        TripForm form = new TripForm();
-
-        String poeTag = poeTagService.createTag(ServletUriComponentsBuilder.fromCurrentRequest().build().toString());
-        tripResourceAssembler.addLinksToForm(form, poeTag);
-
-        return new ResponseEntity<>(form, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{tripName}", method = RequestMethod.GET)
     public HttpEntity<TripResource> getTripByName(@PathVariable("tripName") String tripName) {
         Trip tripTag = tripService.findByName(tripName);
@@ -73,12 +62,15 @@ public class TripController extends AbstractController {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{tripName}", method = RequestMethod.DELETE)
-    public HttpEntity<TripResource> deleteTripTagByName(@PathVariable("tripName") String tripName) {
+    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    public HttpEntity<TripForm> getCreateTripForm() {
 
-        Trip trip = tripService.findByName(tripName);
-        tripService.delete(trip);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        TripForm form = new TripForm();
+
+        String poeTag = poeTagService.createTag(ServletUriComponentsBuilder.fromCurrentRequest().build().toString());
+        tripResourceAssembler.addLinksToForm(form, poeTag);
+
+        return new ResponseEntity<>(form, HttpStatus.OK);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,6 +91,47 @@ public class TripController extends AbstractController {
 
         return new ResponseEntity<>(tripResource, HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/{tripId}/updateForm", method = RequestMethod.GET)
+    public HttpEntity<TripForm> updateTripForm(@PathVariable("tripId") Long tripId) {
+
+        Trip trip = tripService.findTripById(tripId);
+        TripForm tripForm = tripTransformer.toTripForm(trip);
+        String poeTag = poeTagService.createTag(ServletUriComponentsBuilder.fromCurrentRequest().build().toString());
+        tripResourceAssembler.addLinksToUpdateForm(tripForm, poeTag, tripId);
+
+        return new ResponseEntity<>(tripForm, HttpStatus.OK);
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/{tripId}/update/{poeTag}", method = RequestMethod.PUT)
+    public HttpEntity<TripResource> updateTrip(@PathVariable("poeTag") String poeTag, @PathVariable("tripId") long tripId, @Valid @RequestBody TripForm tripForm) {
+        validateTripFor(tripForm);
+
+        PoeTag poeTagRetrieved = poeTagService.getTag(poeTag);
+        if (poeTagRetrieved == null || poeTagRetrieved.getConsumed()) {
+            return methodNotAllowed();
+        }
+
+        poeTagService.consumeTag(poeTag);
+
+        Trip trip = tripService.findTripById(tripId);
+        tripTransformer.updateTrip(trip, tripForm);
+
+        Trip savedTrip = tripService.updateTrip(trip);
+        TripResource tripResource = tripResourceAssembler.toResource(savedTrip);
+
+        return new ResponseEntity<>(tripResource, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{tripName}", method = RequestMethod.DELETE)
+    public HttpEntity<TripResource> deleteTripTagByName(@PathVariable("tripName") String tripName) {
+
+        Trip trip = tripService.findByName(tripName);
+        tripService.delete(trip);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
     // todo: move validateTripFor to separated validator
     private void validateTripFor(TripForm form) {

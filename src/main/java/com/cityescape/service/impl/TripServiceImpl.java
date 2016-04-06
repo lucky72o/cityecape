@@ -72,4 +72,13 @@ public class TripServiceImpl implements TripService {
 
         tripRepository.delete(trip);
     }
+
+    @Override
+    public Trip updateTrip(Trip trip) {
+        if (trip == null) {
+            throw new IllegalTripActionException("Trip to update must not be null.");
+        }
+
+        return tripRepository.save(trip);
+    }
 }

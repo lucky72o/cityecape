@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +34,9 @@ public class TripTransformer extends AbstractTransformer<TripForm, Trip> {
     }
 
     private void addTripTagWeightsToTrip(TripForm form, Trip trip) {
-        trip.setTripTagWeights(form.getTripTagWeights().stream()
+        Set<TripTagWeight> tripTagWeights = trip.getTripTagWeights();
+        tripTagWeights.clear();
+        tripTagWeights.addAll(form.getTripTagWeights().stream()
                 .map(tripTagWeightResource -> getTripTagWeight(trip, tripTagWeightResource))
                 .collect(Collectors.toSet()));
     }
@@ -45,5 +48,35 @@ public class TripTransformer extends AbstractTransformer<TripForm, Trip> {
         tripTagWeight.setNumberOfVotes(tripTagWeightResource.getNumberOfVotes());
         tripTagWeight.setTripTag(tripTagService.findByTag(tripTagWeightResource.getTripTagName()));
         return tripTagWeight;
+    }
+
+    public TripForm toTripForm(Trip trip) {
+        TripForm tripForm = new TripForm();
+        tripForm.setName(trip.getName());
+        tripForm.setDescription(trip.getDescription());
+        addTripTagWeightsToTripForm(tripForm, trip);
+
+        return tripForm;
+    }
+
+    private void addTripTagWeightsToTripForm(TripForm tripForm, Trip trip) {
+        tripForm.getTripTagWeights().addAll((trip.getTripTagWeights().stream()
+                .map(this::getTripTagWeightForm)
+                .collect(Collectors.toSet())));
+    }
+
+    private TripTagWeightForm getTripTagWeightForm(TripTagWeight tripTagWeight) {
+        TripTagWeightForm tripTagWeightForm = new TripTagWeightForm();
+        tripTagWeightForm.setWeight(tripTagWeight.getWeight().doubleValue());
+        tripTagWeightForm.setNumberOfVotes(tripTagWeight.getNumberOfVotes());
+        tripTagWeightForm.setTripTagName(tripTagWeight.getTripTag().getTag());
+
+        return tripTagWeightForm;
+    }
+
+    public void updateTrip(Trip trip, TripForm tripForm) {
+        trip.setDescription(tripForm.getDescription());
+
+        addTripTagWeightsToTrip(tripForm, trip);
     }
 }

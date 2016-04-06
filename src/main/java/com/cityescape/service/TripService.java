@@ -17,4 +17,6 @@ public interface TripService {
     Trip create(Trip mockTrip);
 
     void delete(Trip trip);
+
+    Trip updateTrip(Trip trip);
 }

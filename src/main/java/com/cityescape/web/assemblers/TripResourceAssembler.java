@@ -80,6 +80,12 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
                         .deleteTripTagByName(resource.getName()))
                 .withRel("delete-trip-action"));
 
+        resource.add(ControllerLinkBuilder
+                .linkTo(ControllerLinkBuilder
+                        .methodOn(TripController.class)
+                        .updateTripForm(resource.getTripId()))
+                .withRel("update-trip-form"));
+
     }
 
     private void addLinksToCollection(TripResourceCollection collection) {
@@ -108,5 +114,13 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
         return tripTagWeightResource;
     }
 
+    public void addLinksToUpdateForm(TripForm tripForm, String poeTag, long tripId) {
+        tripForm.add(linkToCurrentRequest().withSelfRel());
 
+        tripForm.add(ControllerLinkBuilder
+                .linkTo(ControllerLinkBuilder
+                        .methodOn(TripController.class)
+                        .updateTrip(poeTag, tripId, tripForm))
+                .withRel("update-trip-action"));
+    }
 }
