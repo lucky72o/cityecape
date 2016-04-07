@@ -282,6 +282,74 @@ public class TripControllerTest {
 
     }
 
+    @Test
+    public void shouldReturnUpdateTripForm() throws Exception {
+
+        when(poeTagServiceMock.createTag(anyString())).thenReturn(POE_TAG);
+        when(tripServiceMock.findTripById(1L)).thenReturn(TestDataHelper.getTrip("Oxford"));
+
+        mockMvc.perform(get("/trips/1/updateForm")).
+                andExpect(status().isOk()).
+                andExpect(jsonPath("$.name", is("Oxford"))).
+                andExpect(jsonPath("$.description", is("description"))).
+                andExpect(jsonPath("$.tripTagWeights", hasSize(1))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTagName", is("testTag"))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.2))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.links", hasSize(2))).
+                andExpect(jsonPath("$.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.links[0].href", containsString("/trips/1/updateForm"))).
+                andExpect(jsonPath("$.links[1].rel", is("update-trip-action"))).
+                andExpect(jsonPath("$.links[1].href", containsString("/trips/1/update/" + POE_TAG)));
+
+        verify(poeTagServiceMock).createTag(anyString());
+        verify(tripServiceMock).findTripById(1L);
+        verifyNoMoreInteractionsCommon();
+    }
+
+    @Test
+    public void shouldReturnTripByName() throws Exception {
+
+        when(tripServiceMock.findByName("Oxford")).thenReturn(TestDataHelper.getTrip("Oxford"));
+
+        mockMvc.perform(get("/trips/Oxford")).
+                andExpect(status().isOk()).
+                andExpect(jsonPath("$.name", is("Oxford"))).
+                andExpect(jsonPath("$.tripId", is(1))).
+                andExpect(jsonPath("$.status", is("NEW"))).
+                andExpect(jsonPath("$.description", is("description"))).
+                andExpect(jsonPath("$.tripTagWeights", hasSize(2))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(11))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.2))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.tagId", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.description", is("Test Tag"))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.links", hasSize(1))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/testTag"))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(22))).
+                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.2))).
+                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTag.tagId", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTag.description", is("Test Tag"))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTag.links", hasSize(1))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].href", containsString("/triptags/testTag"))).
+                andExpect(jsonPath("$.links", hasSize(4))).
+                andExpect(jsonPath("$.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.links[0].href", containsString("/trips/Oxford"))).
+                andExpect(jsonPath("$.links[1].rel", is("trips"))).
+                andExpect(jsonPath("$.links[1].href", containsString("/trips"))).
+                andExpect(jsonPath("$.links[2].rel", is("delete-trip-action"))).
+                andExpect(jsonPath("$.links[2].href", containsString("/trips/Oxford"))).
+                andExpect(jsonPath("$.links[3].rel", is("update-trip-form"))).
+                andExpect(jsonPath("$.links[3].href", containsString("/trips/1/updateForm")));
+
+        verify(tripServiceMock).findByName("Oxford");
+        verifyNoMoreInteractionsCommon();
+
+    }
+
     // all mock services should be listed here
     private void verifyNoMoreInteractionsCommon() {
         verifyNoMoreInteractions(tripServiceMock);

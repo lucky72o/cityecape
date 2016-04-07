@@ -62,6 +62,8 @@ public class TripController extends AbstractController {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
+    //todo: add trip By Id
+
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public HttpEntity<TripForm> getCreateTripForm() {
 
