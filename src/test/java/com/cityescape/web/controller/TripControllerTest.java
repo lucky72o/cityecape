@@ -33,9 +33,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,7 +92,7 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.content[0].links", hasSize(2))).
                 andExpect(jsonPath("$.content[0].links[0].rel", is("self"))).
                 andExpect(jsonPath("$.content[0].links[0].href", containsString("/trips/1"))).
-                andExpect(jsonPath("$.content[0].links[1].rel", is("self"))).
+                andExpect(jsonPath("$.content[0].links[1].rel", is("find-by-name"))).
                 andExpect(jsonPath("$.content[0].links[1].href", containsString("/trips/byName/Trip1"))).
                 andExpect(jsonPath("$.content[0].tripId", is(1))).
                 andExpect(jsonPath("$.content[0].name", is("Trip1"))).
@@ -118,7 +116,7 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.content[1].links", hasSize(2))).
                 andExpect(jsonPath("$.content[1].links[0].rel", is("self"))).
                 andExpect(jsonPath("$.content[1].links[0].href", containsString("/trips/2"))).
-                andExpect(jsonPath("$.content[1].links[1].rel", is("self"))).
+                andExpect(jsonPath("$.content[1].links[1].rel", is("find-by-name"))).
                 andExpect(jsonPath("$.content[1].links[1].href", containsString("/trips/byName/Trip2"))).
                 andExpect(jsonPath("$.content[1].tripId", is(2))).
                 andExpect(jsonPath("$.content[1].name", is("Trip2"))).
@@ -243,7 +241,7 @@ public class TripControllerTest {
                 andExpect(status().isCreated()).
                 andExpect(jsonPath("$.links").exists()).
                 andExpect(jsonPath("$.links", hasSize(2))).
-                andExpect(jsonPath("$.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.links[0].rel", is("find-by-name"))).
                 andExpect(jsonPath("$.links[0].href", containsString("/trips/byName/Oxford"))).
                 andExpect(jsonPath("$.links[1].rel", is("self"))).
                 andExpect(jsonPath("$.links[1].href", containsString("/trips/1"))).
@@ -342,7 +340,7 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].href", containsString("/triptags/testTag"))).
                 andExpect(jsonPath("$.links", hasSize(4))).
-                andExpect(jsonPath("$.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.links[0].rel", is("find-by-name"))).
                 andExpect(jsonPath("$.links[0].href", containsString("/trips/byName/Oxford"))).
                 andExpect(jsonPath("$.links[1].rel", is("trips"))).
                 andExpect(jsonPath("$.links[1].href", containsString("/trips"))).
@@ -397,6 +395,60 @@ public class TripControllerTest {
         verify(tripServiceMock).findTripById(1L);
         verifyNoMoreInteractionsCommon();
 
+    }
+
+    @Test
+    public void shouldUpdateTrip() throws Exception {
+
+        PoeTag poeTag = new PoeTag(POE_TAG);
+        poeTag.setConsumed(false);
+
+        when(poeTagServiceMock.getTag(POE_TAG)).thenReturn(poeTag);
+        Trip trip = TestDataHelper.getTrip("Oxford");
+        when(tripServiceMock.findTripById(1L)).thenReturn(trip);
+        when(tripServiceMock.updateTrip(trip)).thenReturn(trip);
+        when(tripTagServiceMock.findByTag("food")).thenReturn(TestDataHelper.getTripTagByName("food"));
+
+        mockMvc.perform(put("/trips/1/update/" + POE_TAG).
+                contentType(MediaType.APPLICATION_JSON).
+                content("{" +
+                        "\"name\": \"Oxford\"," +
+                        "\"tripTagWeights\": " +
+                        "[" +
+                        "{" +
+                        "\"tripTagName\": \"food\"," +
+                        "\"weight\": \"0.6\"," +
+                        "\"numberOfVotes\": \"100\"" +
+                        "}" +
+                        "]" +
+                        "," +
+                        "\"description\": \"Great historical town\"" +
+                        "}")).
+                andExpect(status().isOk()).
+                andExpect(jsonPath("$.links").exists()).
+                andExpect(jsonPath("$.links", hasSize(2))).
+                andExpect(jsonPath("$.links[0].rel", is("find-by-name"))).
+                andExpect(jsonPath("$.links[0].href", containsString("/trips/byName/Oxford"))).
+                andExpect(jsonPath("$.links[1].rel", is("self"))).
+                andExpect(jsonPath("$.links[1].href", containsString("/trips/1"))).
+                andExpect(jsonPath("$.tripId", is(1))).
+                andExpect(jsonPath("$.name", is("Oxford"))).
+                andExpect(jsonPath("$.description", is("Great historical town"))).
+                andExpect(jsonPath("$.tripTagWeights", hasSize(1))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.6))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.description", is("food Tag"))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.links", hasSize(1))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].rel", is("self"))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/food")));
+
+        verify(poeTagServiceMock).getTag(POE_TAG);
+        verify(poeTagServiceMock).consumeTag(POE_TAG);
+        verify(tripServiceMock).findTripById(1L);
+        verify(tripServiceMock).updateTrip(any(Trip.class));
+        verify(tripTagServiceMock).findByTag("food");
+
+        verifyNoMoreInteractionsCommon();
     }
 
     // all mock services should be listed here

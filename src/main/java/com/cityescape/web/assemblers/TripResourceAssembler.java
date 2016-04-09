@@ -46,7 +46,8 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
 
     public void addSelfLinkToFindByName(TripResource resource, Trip trip) {
         resource.add((ControllerLinkBuilder.linkTo((ControllerLinkBuilder.methodOn(TripController.class)
-                .getTripByName(trip.getName()))).withSelfRel()));
+                .getTripByName(trip.getName())))
+                .withRel("find-by-name")));
     }
 
     public void addSelfLinkToFindById(TripResource resource, Trip trip) {

@@ -134,6 +134,8 @@ public class TripController extends AbstractController {
 
         Trip savedTrip = tripService.updateTrip(trip);
         TripResource tripResource = tripResourceAssembler.toResource(savedTrip);
+        tripResourceAssembler.addSelfLinkToFindByName(tripResource, savedTrip);
+        tripResourceAssembler.addSelfLinkToFindById(tripResource, savedTrip);
 
         return new ResponseEntity<>(tripResource, HttpStatus.OK);
     }
