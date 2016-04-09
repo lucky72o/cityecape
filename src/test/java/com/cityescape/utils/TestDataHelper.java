@@ -74,6 +74,7 @@ public class TestDataHelper {
     public static List<Trip> getTrips() {
         Trip trip1 = getTrip("Trip1");
         Trip trip2 = getTrip("Trip2");
+        trip2.setId(2L);
         return Arrays.asList(trip1, trip2);
     }
 }

@@ -52,17 +52,27 @@ public class TripController extends AbstractController {
         return new ResponseEntity<>(tripResourceCollection, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{tripName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/byName/{tripName}", method = RequestMethod.GET)
     public HttpEntity<TripResource> getTripByName(@PathVariable("tripName") String tripName) {
-        Trip tripTag = tripService.findByName(tripName);
-        TripResource resource = tripResourceAssembler.toResource(tripTag);
+        Trip trip = tripService.findByName(tripName);
+        TripResource resource = tripResourceAssembler.toResource(trip);
+        tripResourceAssembler.addSelfLinkToFindByName(resource, trip);
 
         tripResourceAssembler.addLinksToResource(resource);
 
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    //todo: add trip By Id
+    @RequestMapping(value = "/{tripId}", method = RequestMethod.GET)
+    public HttpEntity<TripResource> getTripById(@PathVariable("tripId") Long tripId) {
+        Trip trip = tripService.findTripById(tripId);
+        TripResource resource = tripResourceAssembler.toResource(trip);
+        tripResourceAssembler.addSelfLinkToFindById(resource, trip);
+
+        tripResourceAssembler.addLinksToResource(resource);
+
+        return new ResponseEntity<>(resource, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public HttpEntity<TripForm> getCreateTripForm() {
@@ -90,6 +100,8 @@ public class TripController extends AbstractController {
         trip.setTripStatus(TripStatus.NEW);
         Trip savedTrip = tripService.create(trip);
         TripResource tripResource = tripResourceAssembler.toResource(savedTrip);
+        tripResourceAssembler.addSelfLinkToFindByName(tripResource, savedTrip);
+        tripResourceAssembler.addSelfLinkToFindById(tripResource, savedTrip);
 
         return new ResponseEntity<>(tripResource, HttpStatus.CREATED);
     }

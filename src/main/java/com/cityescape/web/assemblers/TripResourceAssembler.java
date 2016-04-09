@@ -41,17 +41,29 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
         resource.setStatus(trip.getTripStatus().name());
         addWeightsToResource(trip, resource);
 
+        return resource;
+    }
+
+    public void addSelfLinkToFindByName(TripResource resource, Trip trip) {
         resource.add((ControllerLinkBuilder.linkTo((ControllerLinkBuilder.methodOn(TripController.class)
                 .getTripByName(trip.getName()))).withSelfRel()));
+    }
 
-        return resource;
+    public void addSelfLinkToFindById(TripResource resource, Trip trip) {
+        resource.add((ControllerLinkBuilder.linkTo((ControllerLinkBuilder.methodOn(TripController.class)
+                .getTripById(trip.getId()))).withSelfRel()));
     }
 
     public TripResourceCollection toResourceCollection(List<Trip> trips) {
 
         TripResourceCollection collection = new TripResourceCollection(
                 trips.stream()
-                        .map(this::toResource)
+                        .map(trip -> {
+                            TripResource resource = toResource(trip);
+                            addSelfLinkToFindById(resource, trip);
+                            addSelfLinkToFindByName(resource, trip);
+                            return resource;
+                        })
                         .collect(Collectors.toList())
         );
 
