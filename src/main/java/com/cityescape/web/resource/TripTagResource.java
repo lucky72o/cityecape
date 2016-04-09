@@ -10,6 +10,7 @@ public class TripTagResource extends ResourceSupport {
     private Long tagId;
     private String tag;
     private String description;
+    private String status;
 
     public Long getTagId() {
         return tagId;
@@ -33,5 +34,13 @@ public class TripTagResource extends ResourceSupport {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -5,6 +5,7 @@ import com.cityescape.domain.Trip;
 import com.cityescape.domain.TripTag;
 import com.cityescape.domain.TripTagWeight;
 import com.cityescape.enums.TripStatus;
+import com.cityescape.enums.TripTagStatus;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -17,6 +18,7 @@ public class TestDataHelper {
     public static TripTag getTripTag() {
         TripTag tripTag = new TripTag("testTag", "Test Tag");
         tripTag.setId(100L);
+        tripTag.setTripTagStatus(TripTagStatus.ACTIVE);
         return tripTag;
     }
 

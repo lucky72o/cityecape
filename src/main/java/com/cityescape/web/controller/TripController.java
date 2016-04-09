@@ -97,7 +97,6 @@ public class TripController extends AbstractController {
 
         poeTagService.consumeTag(poeTag);
         Trip trip = tripTransformer.toEntity(form);
-        trip.setTripStatus(TripStatus.NEW);
         Trip savedTrip = tripService.create(trip);
         TripResource tripResource = tripResourceAssembler.toResource(savedTrip);
         tripResourceAssembler.addSelfLinkToFindByName(tripResource, savedTrip);

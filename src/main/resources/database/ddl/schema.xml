@@ -38,6 +38,9 @@
             <column name="TAG" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="TRIP_TAG_STATUS" type="VARCHAR(100)" defaultValue="NEW">
+                <constraints nullable="false"/>
+            </column>
             <column name="DESCRIPTION" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>

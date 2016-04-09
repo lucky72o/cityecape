@@ -33,6 +33,7 @@ public class TripTagResourceAssembler extends IdentifiableResourceAssemblerSuppo
         resource.setTagId(tripTag.getId());
         resource.setTag(tripTag.getTag());
         resource.setDescription(tripTag.getDescription());
+        resource.setStatus(tripTag.getTripTagStatus().name());
 
         resource.add((ControllerLinkBuilder.linkTo((ControllerLinkBuilder.methodOn(TripTagController.class)
                 .getTripTagByTag(tripTag.getTag()))).withSelfRel()));

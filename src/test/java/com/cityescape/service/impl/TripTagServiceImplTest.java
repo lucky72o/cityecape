@@ -1,8 +1,10 @@
 package com.cityescape.service.impl;
 
 import com.cityescape.domain.TripTag;
+import com.cityescape.enums.TripTagStatus;
 import com.cityescape.exception.DuplicateDataException;
 import com.cityescape.exception.EntityToSaveIsNullException;
+import com.cityescape.exception.IllegalTripTagOperation;
 import com.cityescape.repository.TripTagRepository;
 import com.cityescape.service.TripTagService;
 import com.cityescape.utils.TestDataHelper;
@@ -106,10 +108,23 @@ public class TripTagServiceImplTest {
     @Test
     public void shouldDeleteTripTag() throws Exception {
         TripTag tripTag = TestDataHelper.getTripTag();
+        tripTag.setTripTagStatus(TripTagStatus.NEW);
         tripTagService.delete(tripTag);
 
         verify(tripTagRepositoryMock, times(1)).delete(any(TripTag.class));
         verifyNoMoreInteractionsCommon();
+    }
+
+    @Test(expected = IllegalTripTagOperation.class)
+    public void shouldThrowExceptionWhenDeleteTripTagIfTripTagEmpty() throws Exception {
+        tripTagService.delete(null);
+    }
+
+    @Test(expected = IllegalTripTagOperation.class)
+    public void shouldThrowExceptionWhenDeleteTripTagIfTripTagActive() throws Exception {
+        TripTag tripTag = TestDataHelper.getTripTag();
+
+        tripTagService.delete(tripTag);
     }
 
     private void verifyNoMoreInteractionsCommon() {

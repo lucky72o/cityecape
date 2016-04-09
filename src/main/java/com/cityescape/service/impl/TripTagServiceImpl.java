@@ -3,6 +3,7 @@ package com.cityescape.service.impl;
 import com.cityescape.domain.TripTag;
 import com.cityescape.exception.DuplicateDataException;
 import com.cityescape.exception.EntityToSaveIsNullException;
+import com.cityescape.exception.IllegalTripTagOperation;
 import com.cityescape.repository.TripTagRepository;
 import com.cityescape.service.TripTagService;
 import org.slf4j.Logger;
@@ -60,6 +61,13 @@ public class TripTagServiceImpl implements TripTagService {
 
     @Override
     public void delete(TripTag tripTag) {
+        if (tripTag == null) {
+            throw new IllegalTripTagOperation("Trip tag to delete must not be null.");
+        }
+
+        if (!tripTag.isValidToDelete()) {
+            throw new IllegalTripTagOperation("Trip tag with tag [ " + tripTag.getTag() + " ] is not allowed to delete.");
+        }
         tripTagRepository.delete(tripTag);
     }
 }

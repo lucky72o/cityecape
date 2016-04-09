@@ -18,6 +18,10 @@ import java.util.Set;
 @Table(name = "TRIP")
 public class Trip extends AbstractEntity<Long> implements Serializable {
 
+    public Trip() {
+        setTripStatus(TripStatus.NEW);
+    }
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +30,7 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
     @Column(name = "NAME")
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "TRIP_STATUS")
     private TripStatus tripStatus;
 

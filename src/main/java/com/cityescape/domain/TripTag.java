@@ -1,5 +1,6 @@
 package com.cityescape.domain;
 
+import com.cityescape.enums.TripTagStatus;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -29,6 +30,10 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
     @Size(min = 0, max = 255)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TRIP_TAG_STATUS")
+    private TripTagStatus tripTagStatus;
+
     public TripTag(String tag) {
         this.tag = tag;
     }
@@ -39,6 +44,7 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
     }
 
     public TripTag() {
+        setTripTagStatus(TripTagStatus.NEW);
     }
 
     public Long getId() {
@@ -61,12 +67,29 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
         this.description = description;
     }
 
+    public TripTagStatus getTripTagStatus() {
+        return tripTagStatus;
+    }
+
+    public void setTripTagStatus(TripTagStatus tripTagStatus) {
+        this.tripTagStatus = tripTagStatus;
+    }
+
+    public boolean isValidToDelete() {
+        return !tripTagStatus.equals(TripTagStatus.ACTIVE);
+    }
+
+    public boolean isValidToUpdate() {
+        return !tripTagStatus.equals(TripTagStatus.ACTIVE);
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", this.id)
                 .append("tag", this.tag)
                 .append("description", this.description)
+                .append("tripTagStatus", this.tripTagStatus)
                 .toString();
     }
 
@@ -82,6 +105,7 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
                 .append(this.id, tripTag.getId())
                 .append(this.tag, tripTag.getTag())
                 .append(this.description, tripTag.getDescription())
+                .append(this.tripTagStatus, tripTag.getTripTagStatus())
                 .isEquals();
     }
 
@@ -91,6 +115,7 @@ public class TripTag extends AbstractEntity<Long> implements Serializable {
                 .append(id)
                 .append(tag)
                 .append(description)
+                .append(tripTagStatus)
                 .toHashCode();
     }
 }
