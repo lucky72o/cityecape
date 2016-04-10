@@ -23,7 +23,9 @@ public class TestDataHelper {
     }
 
     public static TripTag getTripTagByName(String name) {
-        return new TripTag(name, name + " Tag");
+        TripTag tripTag = new TripTag(name, name + " Tag");
+        tripTag.setTripTagStatus(TripTagStatus.ACTIVE);
+        return tripTag;
     }
 
     public static List<TripTag> getTripTags() {
@@ -44,6 +46,7 @@ public class TestDataHelper {
         trip.setName(name);
         trip.setDescription("description");
         trip.setTripTagWeights(getTripTagWeights());
+        trip.setNumberOfVotesForTags(20L);
 
         return trip;
     }
@@ -68,8 +71,8 @@ public class TestDataHelper {
         tripTagWeight.setId(id);
         tripTagWeight.setTrip(new Trip());
         tripTagWeight.setTripTag(getTripTag());
-        tripTagWeight.setWeight(BigDecimal.valueOf(0.2));
-        tripTagWeight.setNumberOfVotes(100L);
+        tripTagWeight.setWeight(BigDecimal.valueOf(0.5));
+        tripTagWeight.setNumberOfVotes(10L);
         return tripTagWeight;
     }
 

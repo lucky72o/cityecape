@@ -69,6 +69,9 @@
             <column name="TRIP_STATUS" type="VARCHAR(100)" defaultValue="NEW">
                 <constraints nullable="false"/>
             </column>
+            <column name="NUMBER_OF_VOTES_FOR_TAGS" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
             <column name="UPDATED_DATE" type="TIMESTAMP"/>
             <column name="CREATED_DATE" type="TIMESTAMP"/>
         </createTable>

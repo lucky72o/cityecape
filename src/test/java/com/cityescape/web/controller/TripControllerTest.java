@@ -97,17 +97,17 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.content[0].tripId", is(1))).
                 andExpect(jsonPath("$.content[0].name", is("Trip1"))).
                 andExpect(jsonPath("$.content[0].tripTagWeights", hasSize(2))).
-                andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTagWeightId", is(11))).
-                andExpect(jsonPath("$.content[0].tripTagWeights[0].weight", is(0.2))).
-                andExpect(jsonPath("$.content[0].tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTagWeightId", is(22))).
+                andExpect(jsonPath("$.content[0].tripTagWeights[0].weight", is(0.5))).
+                andExpect(jsonPath("$.content[0].tripTagWeights[0].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.content[0].tripTagWeights[1].tripTagWeightId", is(22))).
-                andExpect(jsonPath("$.content[0].tripTagWeights[1].weight", is(0.2))).
-                andExpect(jsonPath("$.content[0].tripTagWeights[1].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.content[0].tripTagWeights[1].tripTagWeightId", is(11))).
+                andExpect(jsonPath("$.content[0].tripTagWeights[1].weight", is(0.5))).
+                andExpect(jsonPath("$.content[0].tripTagWeights[1].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[1].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[1].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.content[0].tripTagWeights[1].tripTag.links", hasSize(1))).
@@ -121,17 +121,17 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.content[1].tripId", is(2))).
                 andExpect(jsonPath("$.content[1].name", is("Trip2"))).
                 andExpect(jsonPath("$.content[1].tripTagWeights", hasSize(2))).
-                andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTagWeightId", is(11))).
-                andExpect(jsonPath("$.content[1].tripTagWeights[0].weight", is(0.2))).
-                andExpect(jsonPath("$.content[1].tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTagWeightId", is(22))).
+                andExpect(jsonPath("$.content[1].tripTagWeights[0].weight", is(0.5))).
+                andExpect(jsonPath("$.content[1].tripTagWeights[0].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.content[1].tripTagWeights[1].tripTagWeightId", is(22))).
-                andExpect(jsonPath("$.content[1].tripTagWeights[1].weight", is(0.2))).
-                andExpect(jsonPath("$.content[1].tripTagWeights[1].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.content[1].tripTagWeights[1].tripTagWeightId", is(11))).
+                andExpect(jsonPath("$.content[1].tripTagWeights[1].weight", is(0.5))).
+                andExpect(jsonPath("$.content[1].tripTagWeights[1].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[1].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[1].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.content[1].tripTagWeights[1].tripTag.links", hasSize(1))).
@@ -248,17 +248,17 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.tripId", is(1))).
                 andExpect(jsonPath("$.name", is("Oxford"))).
                 andExpect(jsonPath("$.tripTagWeights", hasSize(2))).
-                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(11))).
-                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(22))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(22))).
-                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(11))).
+                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links", hasSize(1))).
@@ -298,8 +298,8 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.description", is("description"))).
                 andExpect(jsonPath("$.tripTagWeights", hasSize(1))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTagName", is("testTag"))).
-                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.links", hasSize(2))).
                 andExpect(jsonPath("$.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.links[0].href", containsString("/trips/1/updateForm"))).
@@ -323,17 +323,17 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.status", is("NEW"))).
                 andExpect(jsonPath("$.description", is("description"))).
                 andExpect(jsonPath("$.tripTagWeights", hasSize(2))).
-                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(11))).
-                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(22))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(22))).
-                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(11))).
+                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links", hasSize(1))).
@@ -366,17 +366,17 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.status", is("NEW"))).
                 andExpect(jsonPath("$.description", is("description"))).
                 andExpect(jsonPath("$.tripTagWeights", hasSize(2))).
-                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(11))).
-                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[0].tripTagWeightId", is(22))).
+                andExpect(jsonPath("$.tripTagWeights[0].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[0].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.tripTagWeights[0].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(22))).
-                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.2))).
-                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(100))).
+                andExpect(jsonPath("$.tripTagWeights[1].tripTagWeightId", is(11))).
+                andExpect(jsonPath("$.tripTagWeights[1].weight", is(0.5))).
+                andExpect(jsonPath("$.tripTagWeights[1].numberOfVotes", is(10))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.tagId", is(100))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.description", is("Test Tag"))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links", hasSize(1))).

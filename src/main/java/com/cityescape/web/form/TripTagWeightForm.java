@@ -1,5 +1,7 @@
 package com.cityescape.web.form;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -43,5 +45,31 @@ public class TripTagWeightForm extends ResourceSupport {
 
     public void setNumberOfVotes(long numberOfVotes) {
         this.numberOfVotes = numberOfVotes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TripTagWeightForm that = (TripTagWeightForm) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(weight, that.weight)
+                .append(numberOfVotes, that.numberOfVotes)
+                .append(tripTagName, that.tripTagName)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(tripTagName)
+                .append(weight)
+                .append(numberOfVotes)
+                .toHashCode();
     }
 }

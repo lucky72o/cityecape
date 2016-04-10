@@ -118,6 +118,7 @@ public class TripServiceImplTest {
         assertThat(resultTrip.getName()).isEqualTo(TRIP_NAME);
         assertThat(resultTrip.getDescription()).isEqualTo(trip.getDescription());
         assertThat(resultTrip.getTripTagWeights().size()).isEqualTo(trip.getTripTagWeights().size());
+        assertThat(resultTrip.getNumberOfVotesForTags()).isEqualTo(20L);
 
         verify(tripRepositoryMock).findByName(trip.getName());
         verify(tripRepositoryMock).save(trip);
@@ -166,6 +167,7 @@ public class TripServiceImplTest {
         assertThat(resultTrip.getName()).isEqualTo(TRIP_NAME);
         assertThat(resultTrip.getDescription()).isEqualTo(trip.getDescription());
         assertThat(resultTrip.getTripTagWeights().size()).isEqualTo(trip.getTripTagWeights().size());
+        assertThat(resultTrip.getNumberOfVotesForTags()).isEqualTo(20L);
 
         verify(tripRepositoryMock).save(trip);
         verifyNoMoreInteractionsCommon();

@@ -40,6 +40,9 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "NUMBER_OF_VOTES_FOR_TAGS")
+    private Long numberOfVotesForTags;
+
     public Long getId() {
         return id;
     }
@@ -78,6 +81,14 @@ public class Trip extends AbstractEntity<Long> implements Serializable {
 
     public void setTripStatus(TripStatus tripStatus) {
         this.tripStatus = tripStatus;
+    }
+
+    public Long getNumberOfVotesForTags() {
+        return numberOfVotesForTags;
+    }
+
+    public void setNumberOfVotesForTags(Long numberOfVotesForTags) {
+        this.numberOfVotesForTags = numberOfVotesForTags;
     }
 
     @Override

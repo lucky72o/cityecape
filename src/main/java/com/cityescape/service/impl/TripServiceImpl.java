@@ -1,6 +1,7 @@
 package com.cityescape.service.impl;
 
 import com.cityescape.domain.Trip;
+import com.cityescape.domain.TripTagWeight;
 import com.cityescape.exception.DuplicateDataException;
 import com.cityescape.exception.IllegalTripActionException;
 import com.cityescape.exception.TripNotFoundException;
@@ -57,6 +58,9 @@ public class TripServiceImpl implements TripService {
         if (tripRetrieved != null) {
             throw new DuplicateDataException("Failed to create new trip. Trip with name [ " + trip.getName() + " ] is already exist");
         }
+
+        updateNumberOfVotes(trip);
+
         return tripRepository.save(trip);
     }
 
@@ -79,6 +83,14 @@ public class TripServiceImpl implements TripService {
             throw new IllegalTripActionException("Trip to update must not be null.");
         }
 
+        updateNumberOfVotes(trip);
+
         return tripRepository.save(trip);
+    }
+
+    private void updateNumberOfVotes(Trip trip) {
+        trip.setNumberOfVotesForTags(trip.getTripTagWeights().stream()
+                .mapToLong(TripTagWeight::getNumberOfVotes)
+                .sum());
     }
 }
