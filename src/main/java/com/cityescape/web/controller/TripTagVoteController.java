@@ -29,15 +29,12 @@ public class TripTagVoteController extends AbstractController {
     @Autowired
     private TripTagVotingService tripTagVotingService;
 
-    @RequestMapping(value = "/trip/{tripId}/triptagweight/{tripTagWeightId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/trip/{tripId}/triptagweight/{tripTagWeightId}", method = RequestMethod.POST)
     public HttpEntity<TripResource> voteForTripTagWeight(@PathVariable("tripId") Long tripId, @PathVariable("tripTagWeightId") Long tripTagWeightId) {
 
         Trip trip = tripTagVotingService.addVoteForTripTag(tripId, tripTagWeightId);
 
-
         TripResource resource = tripResourceAssembler.toResource(trip);
-//        tripResourceAssembler.addSelfLinkToFindByName(resource, trip);
-
         tripResourceAssembler.addLinksToResource(resource);
 
         return new ResponseEntity<>(resource, HttpStatus.OK);
