@@ -1,5 +1,5 @@
 liquibase:
-    enabled: true
+    enabled: false
     drop-first: false
     change-log: classpath:database/cityescape-master.xml
     check-change-log-location: true

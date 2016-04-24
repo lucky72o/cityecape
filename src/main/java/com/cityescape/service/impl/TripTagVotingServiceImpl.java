@@ -7,7 +7,7 @@ import com.cityescape.repository.TripTagWeightRepository;
 import com.cityescape.service.TripService;
 import com.cityescape.service.TripTagVotingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Created by Slava on 10/04/2016.
  */
-@Component
+@Service
 @Transactional
 public class TripTagVotingServiceImpl implements TripTagVotingService {
 
@@ -36,25 +36,12 @@ public class TripTagVotingServiceImpl implements TripTagVotingService {
 
         try {
             synchronized (getTripIdObjectForSync(tripId)) {
-                boolean tripTagWeightUpdated = false;
 
                 trip = tripService.findTripById(tripId);
-                Long newNumberOfVotes = trip.getNumberOfVotesForTags() + 1;
-                trip.setNumberOfVotesForTags(newNumberOfVotes);
+                Long newTotalNumberOfVotes = trip.getNumberOfVotesForTags() + 1;
+                trip.setNumberOfVotesForTags(newTotalNumberOfVotes);
 
-                for (TripTagWeight tripTagWeight : trip.getTripTagWeights()) {
-                    if (tripTagWeight.getId().equals(tripTagWeightId)) {
-                        long newNumberOfVotesForTag = tripTagWeight.getNumberOfVotes() + 1;
-                        tripTagWeight.setNumberOfVotes(newNumberOfVotesForTag);
-                        tripTagWeight.setWeight(BigDecimal.valueOf((double) newNumberOfVotesForTag / (double) newNumberOfVotes));
-
-                        tripTagWeightUpdated = true;
-                    } else {
-                        tripTagWeight.setWeight(BigDecimal.valueOf((double) tripTagWeight.getNumberOfVotes() / (double) newNumberOfVotes));
-                    }
-
-                    tripTagWeightRepository.save(tripTagWeight);
-                }
+                boolean tripTagWeightUpdated = updateTripTagWeights(tripTagWeightId, trip, newTotalNumberOfVotes);
 
                 if (!tripTagWeightUpdated) {
                     throw new IllegalVoteActionException("Can't process vote because trip tag weight for update doesn't exist. tripId: [ " + trip + " ] tripTagWeightId: [ " + tripTagWeightId + " ]");
@@ -66,6 +53,24 @@ public class TripTagVotingServiceImpl implements TripTagVotingService {
         }
 
         return trip;
+    }
+
+    private boolean updateTripTagWeights(Long tripTagWeightId, Trip trip, double newTotalNumberOfVotes) {
+        boolean tripTagWeightUpdated = false;
+
+        for (TripTagWeight tripTagWeight : trip.getTripTagWeights()) {
+            TripTagWeight tripTagWeightRetrieved = tripTagWeightRepository.findOne(tripTagWeight.getId());
+            if (tripTagWeightRetrieved.getId().equals(tripTagWeightId)) {
+                long newNumberOfVotesForTag = tripTagWeight.getNumberOfVotes() + 1;
+                tripTagWeightRetrieved.setNumberOfVotes(newNumberOfVotesForTag);
+                tripTagWeightRetrieved.setWeight(BigDecimal.valueOf((double) newNumberOfVotesForTag / newTotalNumberOfVotes));
+
+                tripTagWeightUpdated = true;
+            } else {
+                tripTagWeightRetrieved.setWeight(BigDecimal.valueOf((double) tripTagWeight.getNumberOfVotes() / newTotalNumberOfVotes));
+            }
+        }
+        return tripTagWeightUpdated;
     }
 
     private Object getTripIdObjectForSync(final Long id) {

@@ -59,6 +59,7 @@ public class TripController extends AbstractController {
         tripResourceAssembler.addSelfLinkToFindByName(resource, trip);
 
         tripResourceAssembler.addLinksToResource(resource);
+        tripResourceAssembler.addLinksForTripTagVoting(resource);
 
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
@@ -70,6 +71,7 @@ public class TripController extends AbstractController {
         tripResourceAssembler.addSelfLinkToFindById(resource, trip);
 
         tripResourceAssembler.addLinksToResource(resource);
+        tripResourceAssembler.addLinksForTripTagVoting(resource);
 
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }

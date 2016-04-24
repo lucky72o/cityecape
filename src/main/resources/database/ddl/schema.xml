@@ -104,7 +104,7 @@
             <column name="TRIP_ID" type="BIGINT">
                 <constraints foreignKeyName="TRIP_ID_FK" references="TRIP(id)" nullable="false" />
             </column>
-            <column name="WEIGHT" type="DECIMAL">
+            <column name="WEIGHT" type="DECIMAL(7,3)">
                 <constraints nullable="true"/>
             </column>
             <column name="VOTES" type="BIGINT">

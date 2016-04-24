@@ -3,6 +3,7 @@ package com.cityescape.web.assemblers;
 import com.cityescape.domain.Trip;
 import com.cityescape.domain.TripTagWeight;
 import com.cityescape.web.controller.TripController;
+import com.cityescape.web.controller.TripTagVoteController;
 import com.cityescape.web.form.TripForm;
 import com.cityescape.web.resource.TripResource;
 import com.cityescape.web.resource.TripResourceCollection;
@@ -135,5 +136,15 @@ public class TripResourceAssembler extends IdentifiableResourceAssemblerSupport<
                         .methodOn(TripController.class)
                         .updateTrip(poeTag, tripId, tripForm))
                 .withRel("update-trip-action"));
+    }
+
+    public void addLinksForTripTagVoting(TripResource resource) {
+        resource.getTripTagWeights().forEach(tripTagWeightResource -> {
+            resource.add(ControllerLinkBuilder
+                    .linkTo(ControllerLinkBuilder
+                            .methodOn(TripTagVoteController.class)
+                            .getVoteForTripTagWeightForm(resource.getTripId(), tripTagWeightResource.getTripTagWeightId()))
+                    .withRel("get-" + tripTagWeightResource.getTripTag().getTag() + "-tag-vote-form"));
+        });
     }
 }
