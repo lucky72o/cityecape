@@ -64,7 +64,6 @@ public class TripTagVotingServiceImplTest {
         assertThat(iterator.next().getNumberOfVotes()).isNotEqualTo(iterator.next().getNumberOfVotes());
 
         verify(tripServiceMock).findTripById(1L);
-        verify(tripTagWeightRepositoryMock, times(2)).save(any(TripTagWeight.class));
         verifyNoMoreInteractionsCommon();
     }
 

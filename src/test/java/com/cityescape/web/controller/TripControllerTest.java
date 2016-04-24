@@ -339,7 +339,7 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.links", hasSize(4))).
+                andExpect(jsonPath("$.links", hasSize(6))).
                 andExpect(jsonPath("$.links[0].rel", is("find-by-name"))).
                 andExpect(jsonPath("$.links[0].href", containsString("/trips/byName/Oxford"))).
                 andExpect(jsonPath("$.links[1].rel", is("trips"))).
@@ -347,7 +347,11 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.links[2].rel", is("delete-trip-action"))).
                 andExpect(jsonPath("$.links[2].href", containsString("/trips/Oxford"))).
                 andExpect(jsonPath("$.links[3].rel", is("update-trip-form"))).
-                andExpect(jsonPath("$.links[3].href", containsString("/trips/1/updateForm")));
+                andExpect(jsonPath("$.links[3].href", containsString("/trips/1/updateForm"))).
+                andExpect(jsonPath("$.links[4].rel", is("get-testTag-tag-vote-form"))).
+                andExpect(jsonPath("$.links[4].href", containsString("/triptagvote/trip/1/triptagweight/22/form"))).
+                andExpect(jsonPath("$.links[5].rel", is("get-testTag-tag-vote-form"))).
+                andExpect(jsonPath("$.links[5].href", containsString("/triptagvote/trip/1/triptagweight/11/form")));
 
         verify(tripServiceMock).findByName("Oxford");
         verifyNoMoreInteractionsCommon();
@@ -382,7 +386,7 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links", hasSize(1))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.tripTagWeights[1].tripTag.links[0].href", containsString("/triptags/testTag"))).
-                andExpect(jsonPath("$.links", hasSize(4))).
+                andExpect(jsonPath("$.links", hasSize(6))).
                 andExpect(jsonPath("$.links[0].rel", is("self"))).
                 andExpect(jsonPath("$.links[0].href", containsString("/trips/1"))).
                 andExpect(jsonPath("$.links[1].rel", is("trips"))).
@@ -390,7 +394,11 @@ public class TripControllerTest {
                 andExpect(jsonPath("$.links[2].rel", is("delete-trip-action"))).
                 andExpect(jsonPath("$.links[2].href", containsString("/trips/Oxford"))).
                 andExpect(jsonPath("$.links[3].rel", is("update-trip-form"))).
-                andExpect(jsonPath("$.links[3].href", containsString("/trips/1/updateForm")));
+                andExpect(jsonPath("$.links[3].href", containsString("/trips/1/updateForm"))).
+                andExpect(jsonPath("$.links[4].rel", is("get-testTag-tag-vote-form"))).
+                andExpect(jsonPath("$.links[4].href", containsString("/triptagvote/trip/1/triptagweight/22/form"))).
+                andExpect(jsonPath("$.links[5].rel", is("get-testTag-tag-vote-form"))).
+                andExpect(jsonPath("$.links[5].href", containsString("/triptagvote/trip/1/triptagweight/11/form")));
 
         verify(tripServiceMock).findTripById(1L);
         verifyNoMoreInteractionsCommon();

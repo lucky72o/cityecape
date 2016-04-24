@@ -59,15 +59,14 @@ public class TripTagVotingServiceImpl implements TripTagVotingService {
         boolean tripTagWeightUpdated = false;
 
         for (TripTagWeight tripTagWeight : trip.getTripTagWeights()) {
-            TripTagWeight tripTagWeightRetrieved = tripTagWeightRepository.findOne(tripTagWeight.getId());
-            if (tripTagWeightRetrieved.getId().equals(tripTagWeightId)) {
+            if (tripTagWeight.getId().equals(tripTagWeightId)) {
                 long newNumberOfVotesForTag = tripTagWeight.getNumberOfVotes() + 1;
-                tripTagWeightRetrieved.setNumberOfVotes(newNumberOfVotesForTag);
-                tripTagWeightRetrieved.setWeight(BigDecimal.valueOf((double) newNumberOfVotesForTag / newTotalNumberOfVotes));
+                tripTagWeight.setNumberOfVotes(newNumberOfVotesForTag);
+                tripTagWeight.setWeight(BigDecimal.valueOf((double) newNumberOfVotesForTag / newTotalNumberOfVotes));
 
                 tripTagWeightUpdated = true;
             } else {
-                tripTagWeightRetrieved.setWeight(BigDecimal.valueOf((double) tripTagWeight.getNumberOfVotes() / newTotalNumberOfVotes));
+                tripTagWeight.setWeight(BigDecimal.valueOf((double) tripTagWeight.getNumberOfVotes() / newTotalNumberOfVotes));
             }
         }
         return tripTagWeightUpdated;
