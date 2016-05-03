@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: com.cityescape
+
+  - changeSet:
+    id: 1
+    author : slava
+    comment: Create TRIP_TAG table
+    changes:
+      - createTable:
+          tableName: TRIP_TAG
+          columns:
+          - column:
+              name: ID
+              type: BIGINT
+              autoIncrement: true
+              constraints:
+                primaryKey: true
+                nullable: false
+          - column:
+              name: TAG
+              type: VARCHAR(255)
+              constraints:
+                nullable: false

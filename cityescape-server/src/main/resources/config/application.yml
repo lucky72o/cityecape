@@ -1,0 +1,15 @@
+liquibase:
+    enabled: false
+    drop-first: false
+    change-log: classpath:database/com.cityescape-master.xml
+    check-change-log-location: true
+
+---
+
+spring:
+  profiles: 'local'
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/city_escape
+    username: com.cityescape
+    password: com.cityescape

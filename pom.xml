@@ -6,7 +6,17 @@
 
     <groupId>com.cityescape</groupId>
     <artifactId>cityescape</artifactId>
+    <packaging>pom</packaging>
     <version>0.1.0</version>
+
+    <name>City Escape</name>
+
+    <modules>
+        <module>cityescape-web</module>
+        <module>cityescape-server</module>
+        <module>cityescape-deployment</module>
+        <module>integrationtest</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -18,87 +28,25 @@
         <liquibase-plugin.version>3.4.1</liquibase-plugin.version>
         <fest.version>1.4</fest.version>
         <jsonpath.version>2.0.0</jsonpath.version>
+        <spring-boot-version>1.3.2.RELEASE</spring-boot-version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${jsonpath.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert</artifactId>
-            <version>${fest.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-            <version>0.19.0.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase-plugin.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.8.2</version>
-        </dependency>
-
-
-    </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.5.RELEASE</version>
-                    </dependency>
-                </dependencies>
+                <version>${spring-boot-version}</version>
+                <configuration>
+                    <mainClass>com.cityescape.Application</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -110,6 +58,30 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.easytesting</groupId>
+                <artifactId>fest-assert</artifactId>
+                <version>${fest.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>4.2.4.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>
