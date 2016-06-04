@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Slava on 04/05/2016.
  */
 
-@SolrDocument(solrCoreName = "slava")
+@SolrDocument(solrCoreName = "cityescape")
 public class TripDocument {
 
     @Id
