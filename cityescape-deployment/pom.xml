@@ -19,6 +19,11 @@
             <artifactId>cityescape-web</artifactId>
             <version>0.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.cityescape</groupId>
+            <artifactId>cityescape-search</artifactId>
+            <version>0.1.0</version>
+        </dependency>
     </dependencies>
 
 

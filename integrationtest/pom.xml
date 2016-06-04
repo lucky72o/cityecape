@@ -11,6 +11,8 @@
 
     <artifactId>integrationtest</artifactId>
 
+    <name>City escape integration tests</name>
+
     <dependencies>
         <dependency>
             <groupId>com.cityescape</groupId>

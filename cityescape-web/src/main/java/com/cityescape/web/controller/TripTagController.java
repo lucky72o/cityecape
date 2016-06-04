@@ -2,6 +2,7 @@ package com.cityescape.web.controller;
 
 import com.cityescape.domain.PoeTag;
 import com.cityescape.domain.TripTag;
+import com.cityescape.enums.TripTagStatus;
 import com.cityescape.service.PoeTagService;
 import com.cityescape.web.form.TripTagForm;
 import com.cityescape.web.resource.TripTagResource;
@@ -85,7 +86,9 @@ public class TripTagController extends AbstractController {
         }
 
         poeTagService.consumeTag(poeTag);
-        TripTag tripTag = tripTagService.create(TripTagTransformer.transformToTripTag(form));
+        TripTag tripTagEntity = TripTagTransformer.transformToTripTag(form);
+        tripTagEntity.setTripTagStatus(TripTagStatus.NEW);
+        TripTag tripTag = tripTagService.create(tripTagEntity);
         TripTagResource tripTagResource = tripTagResourceAssembler.toResource(tripTag);
 
         return new ResponseEntity<>(tripTagResource, HttpStatus.CREATED);
