@@ -42,10 +42,19 @@ public class TestDataHelper {
     public static Trip getTrip(String name) {
         Trip trip = new Trip();
         trip.setTripStatus(TripStatus.NEW);
-        trip.setId(1L);
         trip.setName(name);
         trip.setDescription("description");
         trip.setTripTagWeights(getTripTagWeights());
+        trip.setNumberOfVotesForTags(20L);
+
+        return trip;
+    }
+
+    public static Trip getSimpleTrip(String name) {
+        Trip trip = new Trip();
+        trip.setTripStatus(TripStatus.NEW);
+        trip.setName(name);
+        trip.setDescription("description");
         trip.setNumberOfVotesForTags(20L);
 
         return trip;
