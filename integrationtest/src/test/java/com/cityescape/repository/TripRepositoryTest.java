@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -47,7 +48,8 @@ public class TripRepositoryTest extends AbstractCityEscapeRepositoryTest {
         tripRepository.saveAndFlush(newTrip);
 
         // execute the method
-        List<Trip> allActiveTrips = tripRepository.findAllActiveTrips();
+        List<Trip> allActiveTrips = tripRepository.findAllActiveTrips()
+                .collect(Collectors.toList());
 
         // asserts
         assertThat(allActiveTrips).isNotNull();

@@ -4,6 +4,11 @@ liquibase:
     change-log: classpath:database/com.cityescape-master.xml
     check-change-log-location: true
 
+spring:
+  data:
+    solr:
+      host: http://192.168.0.5:8983/solr
+
 ---
 
 spring:
@@ -11,5 +16,5 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/city_escape
-    username: com.cityescape
-    password: com.cityescape
+    username: cityescape
+    password: cityescape
