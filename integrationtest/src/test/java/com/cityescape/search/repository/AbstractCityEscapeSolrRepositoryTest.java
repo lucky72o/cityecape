@@ -13,9 +13,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 /**
  * Created by Slava on 04/05/2016.
  */
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Application.class, loader=SpringApplicationContextLoader.class)
-@Rollback(value = true)
+//@WebAppConfiguration
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = Application.class, loader=SpringApplicationContextLoader.class)
+//@Rollback(value = true)
 public class AbstractCityEscapeSolrRepositoryTest {
 }

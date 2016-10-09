@@ -43,6 +43,7 @@ public class TestDataHelper {
         Trip trip = new Trip();
         trip.setTripStatus(TripStatus.NEW);
         trip.setName(name);
+        trip.setId(1L);
         trip.setDescription("description");
         trip.setTripTagWeights(getTripTagWeights());
         trip.setNumberOfVotesForTags(20L);
@@ -91,4 +92,15 @@ public class TestDataHelper {
         trip2.setId(2L);
         return Arrays.asList(trip1, trip2);
     }
+
+    public static List<Trip> getActiveTrips() {
+        Trip trip1 = getTrip("Trip1");
+        trip1.setTripStatus(TripStatus.ACTIVE);
+        Trip trip2 = getTrip("Trip2");
+        trip2.setTripStatus(TripStatus.ACTIVE);
+        trip2.setId(2L);
+        return Arrays.asList(trip1, trip2);
+    }
+
+
 }

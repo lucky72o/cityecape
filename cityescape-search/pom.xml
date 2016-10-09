@@ -35,6 +35,26 @@
             <artifactId>solr-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.cityescape</groupId>
+            <artifactId>cityescape-server</artifactId>
+            <type>test-jar</type>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 

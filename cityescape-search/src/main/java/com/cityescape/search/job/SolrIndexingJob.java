@@ -1,9 +1,7 @@
 package com.cityescape.search.job;
 
-import com.cityescape.domain.Trip;
-import com.cityescape.domain.TripTag;
-import com.cityescape.domain.TripTagWeight;
 import com.cityescape.repository.TripRepository;
+import com.cityescape.search.converter.TripDocumentConverter;
 import com.cityescape.search.document.TripDocument;
 import com.cityescape.search.repository.TripDocumentRepository;
 import org.slf4j.Logger;
@@ -13,9 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
@@ -35,16 +31,19 @@ public class SolrIndexingJob {
     @Autowired
     private TripRepository tripRepository;
 
+    @Autowired
+    private TripDocumentConverter tripDocumentConverter;
+
 
     //todo: change to cron
-    @Scheduled(fixedRate = 600000)
-    public void reportCurrentTime() {
+//    @Scheduled(fixedRate = 600000)
+    public void indexTrips() {
 
         // todo: return CompletableFuture
         Iterable<TripDocument> oldTripDocuments = tripDocumentRepository.findAll();
 
         List<TripDocument> tripDocuments = tripRepository.findAllActiveTrips()
-                .map(this::convertToTripDocument)
+                .map(tripDocumentConverter::convert)
                 .collect(toList());
 
         LOGGER.info("Solr Indexing Job is in progress. " + tripDocuments.size() + " Trips will be indexed.");
@@ -60,19 +59,4 @@ public class SolrIndexingJob {
         }
 
     }
-
-    // todo move to converter class
-    private TripDocument convertToTripDocument(Trip trip) {
-
-        List<String> tripTags = trip.getTripTagWeights().stream()
-                .map(TripTagWeight::getTripTag)
-                .map(TripTag::getTag)
-                .collect(toList());
-
-        Map<String, BigDecimal> tagWeightMap = trip.getTripTagWeights().stream()
-                .collect(toMap(tripTagWeight -> tripTagWeight.getTripTag().getTag(), TripTagWeight::getWeight));
-
-        return new TripDocument(trip.getId(), trip.getName(), tripTags, tagWeightMap);
-    }
-
 }
