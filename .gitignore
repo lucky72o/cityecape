@@ -1,0 +1,19 @@
+# Created by .ignore support plugin (hsz.mobi)
+.DS_Store
+.idea/
+cityescape-deployment/cityescape-deployment.iml
+cityescape-deployment/target/
+cityescape-search/cityescape-search.iml
+cityescape-search/target/
+cityescape-server/cityescape-server.iml
+cityescape-server/target/
+cityescape-web/cityescape-web.iml
+cityescape-web/target/
+cityescape.iml
+integrationtest/integrationtest.iml
+integrationtest/target/
+.gitignore
+cityescape-deployment/src/main/resources/
+cityescape-search/src/main/resources/
+cityescape-server/src/main/resources/test.json
+integrationtest/src/main/
