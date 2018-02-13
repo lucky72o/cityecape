@@ -1,8 +1,16 @@
 package com.cityescape.web;
 
+import com.thetransactioncompany.cors.CORSFilter;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Configuration for the REST Level-3 API. The resources and workflows are organized
@@ -29,12 +37,31 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 @ComponentScan(basePackages = {"com.cityescape.web"})
 public class WebConfiguration {
 
     public WebConfiguration() {
         System.out.println("*************");
+    }
+
+    @Bean
+    public FilterRegistrationBean corsFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new CORSFilter());
+        filterRegistrationBean.setName("CORS");
+
+        Map<String,String> initParams=new HashMap<>();
+        initParams.put("cors.allowGenericHttpRequests","true");
+        initParams.put("cors.allowOrigin", "*");
+        initParams.put("cors.supportedHeaders","*");
+        initParams.put("cors.supportedMethods", "GET, POST, HEAD, PUT, PATCH, DELETE, OPTIONS");
+
+        filterRegistrationBean.setInitParameters(initParams);
+        List<String> urlPatterns = new ArrayList<>();
+        urlPatterns.add("/*");
+        filterRegistrationBean.setUrlPatterns(urlPatterns);
+        return filterRegistrationBean;
     }
 }
 

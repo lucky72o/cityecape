@@ -16,7 +16,6 @@
         <module>cityescape-server</module>
         <module>cityescape-deployment</module>
         <module>integrationtest</module>
-        <module>cityescape-search</module>
     </modules>
 
     <parent>
@@ -80,12 +79,6 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>4.2.4.RELEASE</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.solr</groupId>
-                <artifactId>solr-core</artifactId>
-                <version>5.0.0</version>
             </dependency>
 
 

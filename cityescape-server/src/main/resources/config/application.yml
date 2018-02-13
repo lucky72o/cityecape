@@ -6,8 +6,15 @@ liquibase:
 
 spring:
   data:
-    solr:
-      host: http://192.168.0.5:8983/solr
+    mongodb:
+      database: uk-cities-db
+  freemarker:
+      cache: false
+
+
+server:
+  port: 8090
+  context-path: /cityescape
 
 ---
 
